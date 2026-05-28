@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>BirTurlaGel · an IGO MICE company</title>
+<meta name="description" content="Booking.com sana 47 sayfa liste sunar; BirTurlaGel sana 3 mükemmel öneri sunar — hepsi sana özel." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Instrument+Serif:ital@0;1&family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --btg-midnight: #0a1929;
+    --btg-deep-blue: #0f2942;
+    --btg-ocean: #1a3a5c;
+    --btg-azure: #3a6ea5;
+    --btg-terra: #c8553d;
+    --btg-terra-light: #e07856;
+    --btg-saffron: #e8a838;
+    --btg-gold: #d4af6f;
+    --btg-gold-deep: #c19656;
+    --btg-cream: #f4ead5;
+    --btg-cream-warm: #e8dcc4;
+    --btg-paper: #fdfaf3;
+    --btg-ink: #1a1a1a;
+    --btg-ink-soft: #4a4a4a;
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Geist", system-ui, sans-serif;
+    color: var(--btg-ink);
+    background: var(--btg-paper);
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.55;
+  }
+  h1, h2, h3, h4 { font-family: "Fraunces", serif; font-weight: 500; letter-spacing: -0.02em; margin: 0; }
+  em { font-family: "Instrument Serif", serif; font-style: italic; color: var(--btg-terra); font-weight: 400; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; border: none; }
+  .container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+  .mono { font-family: "Geist Mono", monospace; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--btg-ink-soft); }
+
+  /* NAV */
+  .nav {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(253, 250, 243, 0.85);
+    backdrop-filter: blur(20px) saturate(180%);
+    border-bottom: 1px solid rgba(10, 25, 41, 0.06);
+  }
+  .nav-inner { display: flex; align-items: center; justify-content: space-between; padding: 18px 0; }
+  .logo { display: flex; flex-direction: column; line-height: 1; }
+  .logo-name { font-family: "Fraunces", serif; font-size: 22px; font-weight: 500; color: var(--btg-midnight); letter-spacing: -0.02em; }
+  .logo-corp { font-family: "Geist Mono", monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--btg-ink-soft); margin-top: 4px; text-transform: uppercase; }
+  .nav-links { display: flex; gap: 32px; align-items: center; }
+  .nav-links a { font-size: 14px; color: var(--btg-ink); transition: color 0.2s; }
+  .nav-links a:hover { color: var(--btg-terra); }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 999px;
+    font-size: 14px; font-weight: 500;
+    transition: all 0.3s var(--ease-out);
+    position: relative; overflow: hidden;
+  }
+  .btn-primary {
+    background: var(--btg-midnight); color: var(--btg-paper);
+  }
+  .btn-primary::before {
+    content: ''; position: absolute; inset: 0;
+    background: var(--btg-terra);
+    transform: translateX(-101%);
+    transition: transform 0.4s var(--ease-out);
+  }
+  .btn-primary:hover::before { transform: translateX(0); }
+  .btn-primary span { position: relative; z-index: 1; }
+  .btn-ghost { background: transparent; color: var(--btg-midnight); border: 1px solid rgba(10, 25, 41, 0.15); }
+  .btn-ghost:hover { background: var(--btg-midnight); color: var(--btg-paper); }
+
+  /* HERO */
+  .hero {
+    padding: 80px 0 100px;
+    background:
+      radial-gradient(ellipse at top left, rgba(200, 85, 61, 0.06), transparent 50%),
+      radial-gradient(ellipse at bottom right, rgba(212, 175, 111, 0.08), transparent 50%),
+      var(--btg-paper);
+  }
+  .hero-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center; }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 6px 14px; border-radius: 999px;
+    background: rgba(200, 85, 61, 0.08); color: var(--btg-terra);
+    font-size: 12px; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase;
+    margin-bottom: 28px;
+  }
+  .hero-eyebrow::before { content: ''; width: 6px; height: 6px; background: var(--btg-terra); border-radius: 50%; animation: pulse 2s infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+  .hero h1 { font-size: clamp(48px, 6vw, 84px); line-height: 0.98; margin-bottom: 24px; color: var(--btg-midnight); }
+  .hero-sub { font-size: 19px; color: var(--btg-ink-soft); max-width: 520px; margin-bottom: 36px; }
+  .hero-ctas { display: flex; gap: 14px; margin-bottom: 48px; }
+  .hero-trust { display: flex; gap: 36px; }
+  .trust-item { display: flex; flex-direction: column; gap: 4px; }
+  .trust-num { font-family: "Fraunces", serif; font-size: 28px; font-weight: 500; color: var(--btg-midnight); }
+  .trust-label { font-size: 12px; color: var(--btg-ink-soft); letter-spacing: 0.04em; text-transform: uppercase; }
+
+  /* AI CHAT */
+  .chat {
+    background: linear-gradient(180deg, var(--btg-deep-blue) 0%, var(--btg-midnight) 100%);
+    border-radius: 28px;
+    padding: 28px;
+    color: var(--btg-cream);
+    box-shadow: 0 30px 80px -20px rgba(10, 25, 41, 0.35), 0 0 0 1px rgba(212, 175, 111, 0.15) inset;
+    position: relative;
+  }
+  .chat-header { display: flex; align-items: center; gap: 12px; padding-bottom: 20px; border-bottom: 1px solid rgba(212, 175, 111, 0.15); margin-bottom: 20px; }
+  .chat-avatar { width: 36px; height: 36px; border-radius: 50%; background: linear-gradient(135deg, var(--btg-gold), var(--btg-terra)); display: grid; place-items: center; font-family: "Fraunces", serif; font-weight: 600; color: var(--btg-midnight); font-size: 16px; }
+  .chat-title { font-size: 14px; font-weight: 500; }
+  .chat-status { font-size: 11px; color: var(--btg-gold); display: flex; align-items: center; gap: 6px; margin-top: 2px; }
+  .chat-status::before { content: ''; width: 6px; height: 6px; background: #4ade80; border-radius: 50%; }
+  .msg { padding: 12px 16px; border-radius: 18px; font-size: 14px; margin-bottom: 12px; max-width: 88%; line-height: 1.5; }
+  .msg-user { background: rgba(58, 110, 165, 0.25); border: 1px solid rgba(58, 110, 165, 0.3); margin-left: auto; border-bottom-right-radius: 6px; }
+  .msg-ai { background: rgba(212, 175, 111, 0.08); border: 1px solid rgba(212, 175, 111, 0.18); border-bottom-left-radius: 6px; }
+  .msg-ai strong { color: var(--btg-gold); font-weight: 500; }
+  .chat-suggestions { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .chip { padding: 6px 12px; border-radius: 999px; background: rgba(212, 175, 111, 0.1); border: 1px solid rgba(212, 175, 111, 0.2); font-size: 12px; color: var(--btg-cream); transition: all 0.2s; cursor: pointer; }
+  .chip:hover { background: rgba(212, 175, 111, 0.2); border-color: var(--btg-gold); }
+  .chat-input { display: flex; gap: 8px; margin-top: 20px; padding: 10px 10px 10px 18px; background: rgba(0,0,0,0.25); border-radius: 999px; border: 1px solid rgba(212, 175, 111, 0.15); }
+  .chat-input input { flex: 1; background: transparent; border: none; color: var(--btg-cream); font-family: inherit; font-size: 14px; outline: none; }
+  .chat-input input::placeholder { color: rgba(244, 234, 213, 0.4); }
+  .chat-send { width: 36px; height: 36px; border-radius: 50%; background: var(--btg-terra); color: white; display: grid; place-items: center; transition: all 0.2s; }
+  .chat-send:hover { background: var(--btg-terra-light); transform: scale(1.05); }
+
+  /* MARQUEE */
+  .marquee {
+    background: var(--btg-midnight); color: var(--btg-cream);
+    padding: 28px 0; overflow: hidden; position: relative;
+    border-top: 1px solid rgba(212, 175, 111, 0.15);
+    border-bottom: 1px solid rgba(212, 175, 111, 0.15);
+  }
+  .marquee-track { display: flex; gap: 64px; white-space: nowrap; animation: scroll 30s linear infinite; }
+  .marquee-item { font-family: "Fraunces", serif; font-size: 28px; font-weight: 400; display: flex; align-items: center; gap: 64px; }
+  .marquee-item::after { content: '✦'; color: var(--btg-gold); font-size: 16px; }
+  @keyframes scroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* SECTION */
+  section { padding: 100px 0; }
+  .section-header { max-width: 720px; margin-bottom: 60px; }
+  .section-num { font-family: "Geist Mono", monospace; font-size: 11px; letter-spacing: 0.14em; color: var(--btg-terra); text-transform: uppercase; margin-bottom: 16px; display: inline-block; }
+  .section-title { font-size: clamp(36px, 4vw, 52px); line-height: 1.05; color: var(--btg-midnight); margin-bottom: 18px; }
+  .section-desc { font-size: 17px; color: var(--btg-ink-soft); max-width: 580px; }
+
+  /* FEATURES */
+  .features-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto auto;
+    gap: 20px;
+  }
+  .feature-card {
+    background: var(--btg-cream-warm);
+    border-radius: 24px;
+    padding: 32px;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+    position: relative; overflow: hidden;
+  }
+  .feature-card:hover { transform: translateY(-4px); box-shadow: 0 20px 50px -12px rgba(10, 25, 41, 0.15); }
+  .feature-icon { width: 48px; height: 48px; border-radius: 14px; background: rgba(200, 85, 61, 0.12); display: grid; place-items: center; font-size: 22px; margin-bottom: 24px; color: var(--btg-terra); }
+  .feature-card h3 { font-size: 24px; margin-bottom: 10px; color: var(--btg-midnight); }
+  .feature-card p { font-size: 14px; color: var(--btg-ink-soft); margin: 0; }
+  .feature-featured {
+    grid-column: span 2; grid-row: span 2;
+    background: linear-gradient(135deg, var(--btg-midnight), var(--btg-deep-blue));
+    color: var(--btg-cream);
+    padding: 48px;
+  }
+  .feature-featured .feature-icon { background: rgba(212, 175, 111, 0.15); color: var(--btg-gold); }
+  .feature-featured h3 { color: var(--btg-cream); font-size: 36px; max-width: 380px; }
+  .feature-featured p { color: rgba(244, 234, 213, 0.7); font-size: 15px; max-width: 420px; }
+  .dna-bars { margin-top: 32px; display: flex; flex-direction: column; gap: 14px; max-width: 360px; }
+  .dna-bar { display: flex; align-items: center; gap: 14px; }
+  .dna-label { width: 110px; font-size: 12px; color: var(--btg-gold); font-family: "Geist Mono", monospace; letter-spacing: 0.04em; text-transform: uppercase; }
+  .dna-track { flex: 1; height: 6px; background: rgba(212, 175, 111, 0.15); border-radius: 999px; overflow: hidden; }
+  .dna-fill { height: 100%; background: linear-gradient(90deg, var(--btg-terra), var(--btg-gold)); border-radius: 999px; }
+  .dna-pct { font-family: "Geist Mono", monospace; font-size: 12px; color: var(--btg-cream); width: 38px; text-align: right; }
+  .feature-gold { background: linear-gradient(135deg, rgba(212, 175, 111, 0.18), rgba(232, 168, 56, 0.12)); }
+  .feature-gold .feature-icon { background: rgba(212, 175, 111, 0.2); color: var(--btg-gold-deep); }
+  .feature-terra { background: linear-gradient(135deg, rgba(200, 85, 61, 0.1), rgba(224, 120, 86, 0.08)); }
+
+  /* HOTELS */
+  .hotels-section { background: linear-gradient(180deg, var(--btg-paper), var(--btg-cream-warm)); }
+  .hotels-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .hotel-card {
+    background: white;
+    border-radius: 20px;
+    overflow: hidden;
+    transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+    box-shadow: 0 1px 3px rgba(10, 25, 41, 0.05);
+  }
+  .hotel-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px -16px rgba(10, 25, 41, 0.2); }
+  .hotel-card.large { grid-column: span 2; grid-row: span 2; }
+  .hotel-card.large .hotel-img { height: 360px; }
+  .hotel-card.large .hotel-title { font-size: 32px; }
+  .hotel-img { height: 200px; position: relative; overflow: hidden; }
+  .hotel-img-gradient { width: 100%; height: 100%; transition: transform 0.6s var(--ease-out); }
+  .hotel-card:hover .hotel-img-gradient { transform: scale(1.05); }
+  .hotel-img-1 { background: linear-gradient(135deg, #e8dcc4 0%, #d4af6f 40%, #a8895a 100%); }
+  .hotel-img-2 { background: linear-gradient(135deg, #c8553d 0%, #8a3a2a 60%, #4a1d15 100%); }
+  .hotel-img-3 { background: linear-gradient(135deg, #3a6ea5 0%, #1a3a5c 60%, #0a1929 100%); }
+  .hotel-img-4 { background: linear-gradient(135deg, #e8a838 0%, #c8553d 100%); }
+  .hotel-img-5 { background: linear-gradient(135deg, #1a3a5c 0%, #0f2942 50%, #c19656 100%); }
+  .hotel-badges { position: absolute; top: 16px; left: 16px; right: 16px; display: flex; justify-content: space-between; }
+  .match-score {
+    background: rgba(253, 250, 243, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 8px 14px; border-radius: 999px;
+    font-family: "Fraunces", serif; font-size: 18px; font-weight: 600; color: var(--btg-midnight);
+    display: flex; align-items: center; gap: 6px;
+  }
+  .match-score::before { content: ''; width: 8px; height: 8px; background: #4ade80; border-radius: 50%; }
+  .verified { background: rgba(10, 25, 41, 0.85); color: var(--btg-gold); backdrop-filter: blur(10px); width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; font-size: 14px; }
+  .hotel-info { padding: 22px; }
+  .hotel-tags { display: flex; gap: 6px; margin-bottom: 14px; flex-wrap: wrap; }
+  .tag { font-size: 11px; padding: 4px 10px; border-radius: 999px; background: var(--btg-cream-warm); color: var(--btg-ink-soft); font-weight: 500; letter-spacing: 0.02em; }
+  .tag-halal { background: rgba(74, 222, 128, 0.12); color: #2c8a4a; }
+  .tag-family { background: rgba(58, 110, 165, 0.12); color: var(--btg-azure); }
+  .hotel-title { font-size: 22px; color: var(--btg-midnight); margin-bottom: 6px; }
+  .hotel-location { font-size: 13px; color: var(--btg-ink-soft); margin-bottom: 14px; display: flex; align-items: center; gap: 6px; }
+  .hotel-price { display: flex; align-items: baseline; gap: 6px; padding-top: 14px; border-top: 1px solid rgba(10, 25, 41, 0.06); }
+  .hotel-price-num { font-family: "Fraunces", serif; font-size: 24px; font-weight: 500; color: var(--btg-midnight); }
+  .hotel-price-unit { font-size: 12px; color: var(--btg-ink-soft); }
+
+  /* PROCESS */
+  .process-section { background: var(--btg-midnight); color: var(--btg-cream); }
+  .process-section .section-title { color: var(--btg-cream); }
+  .process-section .section-desc { color: rgba(244, 234, 213, 0.7); }
+  .process-section .section-num { color: var(--btg-gold); }
+  .process-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 40px; }
+  .process-step {
+    padding: 32px 24px;
+    border: 1px solid rgba(212, 175, 111, 0.15);
+    border-radius: 20px;
+    transition: all 0.3s var(--ease-out);
+    background: rgba(212, 175, 111, 0.02);
+  }
+  .process-step:hover { border-color: var(--btg-gold); background: rgba(212, 175, 111, 0.06); transform: translateY(-4px); }
+  .process-num { font-family: "Fraunces", serif; font-size: 64px; font-weight: 300; line-height: 1; color: var(--btg-gold); margin-bottom: 20px; }
+  .process-step h3 { color: var(--btg-cream); font-size: 22px; margin-bottom: 10px; }
+  .process-step p { font-size: 14px; color: rgba(244, 234, 213, 0.65); margin: 0; }
+
+  /* CTA */
+  .cta-section {
+    background: linear-gradient(135deg, var(--btg-terra) 0%, var(--btg-terra-light) 60%, var(--btg-saffron) 100%);
+    color: white;
+    text-align: center;
+  }
+  .cta-section .section-title { color: white; font-size: clamp(40px, 5vw, 64px); }
+  .cta-section em { color: var(--btg-midnight); }
+  .cta-form { max-width: 480px; margin: 36px auto 0; display: flex; gap: 8px; padding: 8px; background: white; border-radius: 999px; box-shadow: 0 20px 50px -12px rgba(10, 25, 41, 0.3); }
+  .cta-form input { flex: 1; border: none; padding: 14px 20px; font-family: inherit; font-size: 15px; background: transparent; outline: none; color: var(--btg-midnight); }
+  .cta-form button { background: var(--btg-midnight); color: white; padding: 14px 28px; border-radius: 999px; font-weight: 500; font-size: 14px; transition: all 0.2s; }
+  .cta-form button:hover { background: var(--btg-deep-blue); transform: scale(1.02); }
+  .cta-note { margin-top: 20px; font-size: 13px; color: rgba(255,255,255,0.85); }
+
+  /* FOOTER */
+  footer { background: var(--btg-midnight); color: var(--btg-cream); padding: 60px 0 32px; border-top: 1px solid rgba(212, 175, 111, 0.15); }
+  .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px; }
+  .footer-brand .logo-name { color: var(--btg-cream); }
+  .footer-brand .logo-corp { color: var(--btg-gold); }
+  .footer-tag { margin-top: 16px; font-family: "Fraunces", serif; font-style: italic; font-size: 16px; color: rgba(244, 234, 213, 0.6); max-width: 280px; }
+  .footer-col h4 { font-family: "Geist Mono", monospace; font-size: 11px; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase; color: var(--btg-gold); margin-bottom: 18px; }
+  .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px; }
+  .footer-col a { font-size: 14px; color: rgba(244, 234, 213, 0.75); transition: color 0.2s; }
+  .footer-col a:hover { color: var(--btg-gold); }
+  .footer-bottom { padding-top: 24px; border-top: 1px solid rgba(212, 175, 111, 0.1); display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: rgba(244, 234, 213, 0.5); }
+  .footer-legal { display: flex; gap: 24px; }
+
+  /* RESPONSIVE */
+  @media (max-width: 980px) {
+    .hero-grid, .features-grid, .hotels-grid, .process-grid, .footer-grid { grid-template-columns: 1fr; }
+    .feature-featured, .hotel-card.large { grid-column: span 1; grid-row: span 1; }
+    .features-grid { grid-template-columns: repeat(2, 1fr); }
+    .hotels-grid { grid-template-columns: repeat(2, 1fr); }
+    .process-grid { grid-template-columns: repeat(2, 1fr); }
+    .nav-links a:not(.btn) { display: none; }
+    section { padding: 70px 0; }
+    .hero { padding: 50px 0 70px; }
+    .footer-grid { grid-template-columns: 1fr 1fr; }
+    .footer-bottom { flex-direction: column; gap: 12px; }
+  }
+  @media (max-width: 560px) {
+    .features-grid, .hotels-grid, .process-grid, .footer-grid { grid-template-columns: 1fr; }
+    .hero-trust { gap: 20px; }
+    .trust-num { font-size: 22px; }
+    .marquee-item { font-size: 20px; gap: 36px; }
+    .marquee-item::after { font-size: 12px; }
+    .hero-ctas { flex-direction: column; }
+    .cta-form { flex-direction: column; border-radius: 24px; }
+    .cta-form button { width: 100%; }
+  }
+
+  /* ENTRANCE ANIMATIONS */
+  .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out); }
+  .reveal.in { opacity: 1; transform: none; }
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="container nav-inner">
+    <a href="#" class="logo">
+      <span class="logo-name">BirTurlaGel</span>
+      <span class="logo-corp">an IGO MICE company</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Özellikler</a>
+      <a href="#hotels">Koleksiyon</a>
+      <a href="#process">Nasıl Çalışır</a>
+      <a href="#cta" class="btn btn-primary"><span>Erken Erişim →</span></a>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="container hero-grid">
+    <div class="reveal in">
+      <span class="hero-eyebrow">AI tabanlı seyahat eşleştirme · Türkiye</span>
+      <h1>Bir <em>tur</em> ile gel, bir <em>başka</em> sen ol.</h1>
+      <p class="hero-sub">Booking.com sana 47 sayfa liste sunar. <strong>BirTurlaGel</strong> sana 3 mükemmel öneri sunar — kişiliğine, bütçene, ruh haline özel. Aile dostu, helal konsept, güvenilir.</p>
+      <div class="hero-ctas">
+        <a href="#cta" class="btn btn-primary"><span>Seyahat DNA'mı keşfet</span></a>
+        <a href="#features" class="btn btn-ghost">Nasıl çalışıyor?</a>
+      </div>
+      <div class="hero-trust">
+        <div class="trust-item"><span class="trust-num">14K+</span><span class="trust-label">Erken kayıt</span></div>
+        <div class="trust-item"><span class="trust-num">2.400+</span><span class="trust-label">Doğrulanmış otel</span></div>
+        <div class="trust-item"><span class="trust-num">%94</span><span class="trust-label">Eşleşme isabeti</span></div>
+      </div>
+    </div>
+
+    <div class="chat reveal in" style="transition-delay: 0.15s">
+      <div class="chat-header">
+        <div class="chat-avatar">B</div>
+        <div>
+          <div class="chat-title">BirTurlaGel Asistanı</div>
+          <div class="chat-status">Çevrimiçi · Türkçe</div>
+        </div>
+      </div>
+      <div class="msg msg-user">Eylülde 5 gün, bütçem 30K, doğa ve termal istiyorum. Kalabalık sevmem, aile dostu olsun.</div>
+      <div class="msg msg-ai">
+        Anladım — <strong>huzur ve manevi yenilenme</strong> arıyorsun. Senin profiline göre 3 önerim var:<br><br>
+        <strong>1.</strong> Pamukkale Termal Konağı — %94 uyum<br>
+        <strong>2.</strong> Afyon Kaplıca Köyü — %89 uyum<br>
+        <strong>3.</strong> Bolu Yedigöller Eko-Tesis — %86 uyum<br><br>
+        Hepsi <strong>helal konsept</strong> ve sessiz dönemde. Hangisini daha çok merak ettin?
+      </div>
+      <div class="chat-suggestions">
+        <span class="chip">Pamukkale'yi anlat</span>
+        <span class="chip">Fiyatları göster</span>
+        <span class="chip">Daha sessiz seçenek var mı?</span>
+      </div>
+      <div class="chat-input">
+        <input placeholder="Bana hayalindeki tatili anlat..." />
+        <button class="chat-send" aria-label="Gönder">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item">Doğru otel</span>
+    <span class="marquee-item">Doğru an</span>
+    <span class="marquee-item">Doğru fiyat</span>
+    <span class="marquee-item">Doğru sen</span>
+    <span class="marquee-item">Doğru otel</span>
+    <span class="marquee-item">Doğru an</span>
+    <span class="marquee-item">Doğru fiyat</span>
+    <span class="marquee-item">Doğru sen</span>
+  </div>
+</div>
+
+<section id="features">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">01 · Özellikler</span>
+      <h2 class="section-title">Sıradan arama değil, <em>tanıyan</em> bir seyahat asistanı.</h2>
+      <p class="section-desc">15 soruluk DNA testinden, AI fiyat tahminine; her özellik <strong>sana ait</strong> bir karar vermen için tasarlandı.</p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card feature-featured reveal">
+        <div class="feature-icon">✦</div>
+        <h3>Seyahat DNA<br>Profili</h3>
+        <p>15 soruluk kişilik testi. Her seyahatten sonra güncellenir. Yıllar geçtikçe BirTurlaGel seni daha iyi tanır.</p>
+        <div class="dna-bars">
+          <div class="dna-bar"><span class="dna-label">Kültür</span><div class="dna-track"><div class="dna-fill" style="width:62%"></div></div><span class="dna-pct">%62</span></div>
+          <div class="dna-bar"><span class="dna-label">Huzur</span><div class="dna-track"><div class="dna-fill" style="width:23%"></div></div><span class="dna-pct">%23</span></div>
+          <div class="dna-bar"><span class="dna-label">Macera</span><div class="dna-track"><div class="dna-fill" style="width:15%"></div></div><span class="dna-pct">%15</span></div>
+        </div>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">◐</div>
+        <h3>Eşleşme Skoru</h3>
+        <p>Her otel için 0–100 uyum skoru ve detaylı "neden" açıklaması.</p>
+      </div>
+
+      <div class="feature-card feature-terra reveal">
+        <div class="feature-icon">🎲</div>
+        <h3>Sürpriz Modu</h3>
+        <p>Bütçe + tarih ver, varış yerini AI seçsin. Yolculuk bilet açılana kadar gizli.</p>
+      </div>
+
+      <div class="feature-card feature-gold reveal">
+        <div class="feature-icon">✓</div>
+        <h3>Görsel Doğrulama</h3>
+        <p>Her fotoğraf AI ile gerçekliği doğrulanır. Sahte/eski görsel görmezsin.</p>
+      </div>
+
+      <div class="feature-card reveal">
+        <div class="feature-icon">⌖</div>
+        <h3>Fiyat Tahmini</h3>
+        <p>"14 günde %12 düşebilir" gibi AI tahminler. En doğru anı bekle.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="hotels" class="hotels-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">02 · Koleksiyon</span>
+      <h2 class="section-title">Doğrulanmış oteller, <em>sana</em> uyumlu.</h2>
+      <p class="section-desc">Aile dostu, helal konsept, alkolsüz tesisler. Her birinde uyum skoru ve görsel doğrulama rozeti.</p>
+    </div>
+
+    <div class="hotels-grid">
+      <div class="hotel-card large reveal">
+        <div class="hotel-img">
+          <div class="hotel-img-gradient hotel-img-1"></div>
+          <div class="hotel-badges">
+            <div class="match-score">94</div>
+            <div class="verified">✓</div>
+          </div>
+        </div>
+        <div class="hotel-info">
+          <div class="hotel-tags">
+            <span class="tag tag-halal">Helal konsept</span>
+            <span class="tag tag-family">Aile dostu</span>
+            <span class="tag">Termal</span>
+            <span class="tag">Doğa</span>
+          </div>
+          <h3 class="hotel-title">Pamukkale Termal Konağı</h3>
+          <div class="hotel-location">⌖ Denizli, Pamukkale</div>
+          <p style="color:var(--btg-ink-soft); font-size:14px; margin:0 0 14px;">Travertenlerin eteğinde, sessiz dönemde — 18 oda, kadın/aile havuzu ayrımı, mescit, helal mutfak sertifikalı.</p>
+          <div class="hotel-price">
+            <span class="hotel-price-num">₺4.200</span>
+            <span class="hotel-price-unit">/ gece · kahvaltı dahil</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hotel-card reveal">
+        <div class="hotel-img">
+          <div class="hotel-img-gradient hotel-img-2"></div>
+          <div class="hotel-badges"><div class="match-score">89</div><div class="verified">✓</div></div>
+        </div>
+        <div class="hotel-info">
+          <div class="hotel-tags"><span class="tag tag-halal">Helal</span><span class="tag">Kültür</span></div>
+          <h3 class="hotel-title" style="font-size:20px">Kapadokya Taş Konak</h3>
+          <div class="hotel-location">⌖ Nevşehir, Göreme</div>
+          <div class="hotel-price"><span class="hotel-price-num">₺5.800</span><span class="hotel-price-unit">/ gece</span></div>
+        </div>
+      </div>
+
+      <div class="hotel-card reveal">
+        <div class="hotel-img">
+          <div class="hotel-img-gradient hotel-img-3"></div>
+          <div class="hotel-badges"><div class="match-score">87</div><div class="verified">✓</div></div>
+        </div>
+        <div class="hotel-info">
+          <div class="hotel-tags"><span class="tag tag-family">Aile</span><span class="tag">Deniz</span></div>
+          <h3 class="hotel-title" style="font-size:20px">Bodrum Sessiz Koy</h3>
+          <div class="hotel-location">⌖ Muğla, Bodrum</div>
+          <div class="hotel-price"><span class="hotel-price-num">₺6.400</span><span class="hotel-price-unit">/ gece</span></div>
+        </div>
+      </div>
+
+      <div class="hotel-card reveal">
+        <div class="hotel-img">
+          <div class="hotel-img-gradient hotel-img-4"></div>
+          <div class="hotel-badges"><div class="match-score">85</div><div class="verified">✓</div></div>
+        </div>
+        <div class="hotel-info">
+          <div class="hotel-tags"><span class="tag tag-halal">Helal</span><span class="tag">Butik</span></div>
+          <h3 class="hotel-title" style="font-size:20px">Kalkan Taş Ev</h3>
+          <div class="hotel-location">⌖ Antalya, Kalkan</div>
+          <div class="hotel-price"><span class="hotel-price-num">₺7.200</span><span class="hotel-price-unit">/ gece</span></div>
+        </div>
+      </div>
+
+      <div class="hotel-card reveal">
+        <div class="hotel-img">
+          <div class="hotel-img-gradient hotel-img-5"></div>
+          <div class="hotel-badges"><div class="match-score">82</div><div class="verified">✓</div></div>
+        </div>
+        <div class="hotel-info">
+          <div class="hotel-tags"><span class="tag tag-family">Aile</span><span class="tag">Şehir</span></div>
+          <h3 class="hotel-title" style="font-size:20px">İstanbul Boğaz Konağı</h3>
+          <div class="hotel-location">⌖ İstanbul, Üsküdar</div>
+          <div class="hotel-price"><span class="hotel-price-num">₺5.100</span><span class="hotel-price-unit">/ gece</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="process" class="process-section">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-num">03 · Nasıl Çalışır</span>
+      <h2 class="section-title">Dört adım, <em>bir</em> mükemmel seyahat.</h2>
+      <p class="section-desc">Saatlerce arama yapmadan, sana uygun olanı bulmanın yeni yolu.</p>
+    </div>
+    <div class="process-grid">
+      <div class="process-step reveal"><div class="process-num">01</div><h3>Tanış</h3><p>15 soruluk DNA testiyle seyahat kişiliğini ortaya çıkar. 3 dakika.</p></div>
+      <div class="process-step reveal"><div class="process-num">02</div><h3>Anlat</h3><p>Bütçe, tarih, ruh hali — doğal dille yaz. AI seni dinler.</p></div>
+      <div class="process-step reveal"><div class="process-num">03</div><h3>Seç</h3><p>Liste değil, sana özel 3 öneri. Her birinin "neden"i açık.</p></div>
+      <div class="process-step reveal"><div class="process-num">04</div><h3>Yaşa</h3><p>Tek ekrandan tüm rezervasyon: uçak, otel, transfer, tur.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="cta" class="cta-section">
+  <div class="container">
+    <div class="reveal">
+      <span class="mono" style="color:rgba(255,255,255,0.8)">Sınırlı kontenjan</span>
+      <h2 class="section-title" style="margin-top:14px">Erken erişime <em>katıl</em>.</h2>
+      <p style="max-width:520px; margin:18px auto 0; font-size:17px; color:rgba(255,255,255,0.9)">İlk 5.000 üyeye Seyahat DNA testi <strong>ücretsiz</strong>. Lansman için ilk haberi alanlar arasında ol.</p>
+      <form class="cta-form" onsubmit="event.preventDefault(); this.querySelector('button').innerText='✓ Teşekkürler';">
+        <input type="email" placeholder="email@ornek.com" required />
+        <button type="submit">Kayıt ol</button>
+      </form>
+      <p class="cta-note">KVKK uyumludur · İstediğin zaman çıkabilirsin</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo">
+          <span class="logo-name">BirTurlaGel</span>
+          <span class="logo-corp">an IGO MICE company</span>
+        </div>
+        <p class="footer-tag">Bir tur ile gel, bir başka sen ol.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Platform</h4>
+        <ul>
+          <li><a href="#">AI Asistan</a></li>
+          <li><a href="#">Seyahat DNA</a></li>
+          <li><a href="#">Sürpriz Modu</a></li>
+          <li><a href="#">Otel Koleksiyonu</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Kurumsal</h4>
+        <ul>
+          <li><a href="#">IGO MICE Hakkında</a></li>
+          <li><a href="#">B2B / MICE</a></li>
+          <li><a href="#">Partner Ol</a></li>
+          <li><a href="#">İletişim</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Yasal</h4>
+        <ul>
+          <li><a href="#">KVKK</a></li>
+          <li><a href="#">Kullanım Şartları</a></li>
+          <li><a href="#">TÜRSAB Lisansı</a></li>
+          <li><a href="#">Çerez Politikası</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 IGO MICE · BirTurlaGel™</div>
+      <div class="footer-legal">
+        <span>TÜRSAB · İstanbul</span>
+        <span>Made with care in Türkiye</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Reveal on scroll
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+</script>
+
+</body>
+</html>
