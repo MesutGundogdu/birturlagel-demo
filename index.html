@@ -766,6 +766,79 @@
     .method-step { grid-template-columns: 100px 1fr; gap: 32px; padding: 40px 0 !important; }
     .method-decor { display: none; }
   }
+  /* ── AI HERO (kahraman sohbet) ───────────────────────────── */
+  .ai-hero {
+    position: relative; overflow: hidden;
+    padding: 48px 0 72px;
+    background:
+      radial-gradient(ellipse 70% 60% at 15% 10%, rgba(58,110,165,0.18), transparent 60%),
+      linear-gradient(165deg, var(--btg-midnight) 0%, var(--btg-deep-blue) 60%, var(--btg-ocean) 130%);
+    color: var(--btg-cream);
+  }
+  /* yumuşak, yavaşça gezinen ışıltı kümeleri — "canlı AI" hissi */
+  .ai-hero-glow { position: absolute; inset: -20% -10%; pointer-events: none; z-index: 0; filter: blur(60px); opacity: 0.55; }
+  .ai-hero-glow::before, .ai-hero-glow::after {
+    content: ''; position: absolute; width: 46vw; height: 46vw; border-radius: 50%;
+  }
+  .ai-hero-glow::before { background: radial-gradient(circle, rgba(212,175,111,0.5), transparent 65%); top: -10%; right: 4%; animation: floatGlow 14s var(--ease-soft) infinite alternate; }
+  .ai-hero-glow::after  { background: radial-gradient(circle, rgba(200,85,61,0.45), transparent 65%); bottom: -20%; left: 0%; animation: floatGlow 18s var(--ease-soft) infinite alternate-reverse; }
+  @keyframes floatGlow { from { transform: translate(0,0) scale(1); } to { transform: translate(40px,30px) scale(1.15); } }
+
+  .ai-hero .cover-meta { color: rgba(244,234,213,0.55); position: relative; z-index: 1; margin-bottom: 36px; }
+  .ai-hero .cover-meta .label::before { background: var(--btg-gold); }
+  .ai-hero-grid { display: grid; grid-template-columns: 0.95fr 1.05fr; gap: 56px; align-items: center; position: relative; z-index: 1; }
+
+  .ai-badge {
+    display: inline-flex; align-items: center; gap: 9px;
+    padding: 8px 16px; border-radius: 999px; margin-bottom: 24px;
+    background: rgba(212,175,111,0.1); border: 1px solid rgba(212,175,111,0.35);
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--btg-gold);
+  }
+  .ai-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--color-success); box-shadow: 0 0 0 0 rgba(74,222,128,0.6); animation: livePulse 1.8s var(--ease-soft) infinite; }
+  @keyframes livePulse { 0% { box-shadow: 0 0 0 0 rgba(74,222,128,0.55); } 70% { box-shadow: 0 0 0 9px rgba(74,222,128,0); } 100% { box-shadow: 0 0 0 0 rgba(74,222,128,0); } }
+
+  .ai-hero h1 { font-size: clamp(48px, 6vw, 104px); color: var(--btg-cream); margin-bottom: 24px; font-variation-settings: "opsz" 144; letter-spacing: -0.04em; line-height: 0.9; }
+  .ai-hero h1 em { font-family: var(--font-italic); color: var(--btg-gold); font-size: 1.05em; }
+  .ai-hero-dek { font-family: var(--font-edit); font-style: italic; font-size: clamp(18px,1.5vw,23px); color: rgba(244,234,213,0.78); line-height: 1.4; max-width: 480px; margin-bottom: 32px; }
+  .ai-hero .cover-stats { border-top-color: rgba(212,175,111,0.22); margin-top: 28px; padding-top: 24px; gap: 28px; }
+  .ai-hero .stat-num { color: var(--btg-cream); font-size: 34px; }
+  .ai-hero .stat-num sup { color: var(--btg-gold); }
+  .ai-hero .stat-label { color: rgba(244,234,213,0.55); }
+
+  /* Canlı konsol — büyük, parlayan çerçeve */
+  .ai-console {
+    background: rgba(244,234,213,0.045);
+    border: 1px solid rgba(212,175,111,0.28);
+    border-radius: 24px; padding: 26px 26px 22px;
+    backdrop-filter: blur(22px);
+    box-shadow: 0 40px 90px -30px rgba(0,0,0,0.6), 0 0 0 1px rgba(212,175,111,0.06), inset 0 1px 0 rgba(244,234,213,0.06);
+    position: relative;
+  }
+  .ai-console::after {
+    content: ''; position: absolute; inset: -1px; border-radius: 24px; padding: 1px; pointer-events: none;
+    background: linear-gradient(135deg, rgba(212,175,111,0.5), transparent 40%, transparent 60%, rgba(200,85,61,0.4));
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+  }
+  .ai-console-hd { display: flex; align-items: center; gap: 13px; padding-bottom: 16px; margin-bottom: 8px; border-bottom: 1px solid rgba(212,175,111,0.16); }
+  .ai-console-avatar { width: 42px; height: 42px; border-radius: 12px; background: linear-gradient(135deg, var(--btg-gold), var(--btg-terra)); display: grid; place-items: center; font-family: var(--font-display); font-weight: 600; color: var(--btg-midnight); font-size: 19px; box-shadow: 0 0 24px -4px rgba(212,175,111,0.6); }
+  .ai-console-meta strong { display: block; color: var(--btg-cream); font-family: var(--font-body); font-weight: 600; font-size: 14px; }
+  .ai-console-meta span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: rgba(244,234,213,0.5); display: inline-flex; align-items: center; gap: 6px; }
+  .ai-console .chat-stream { max-height: 420px; overflow-y: auto; padding: 14px 4px 6px; scrollbar-width: thin; scrollbar-color: rgba(212,175,111,0.4) transparent; }
+  .ai-console .chat-stream::-webkit-scrollbar { width: 6px; }
+  .ai-console .chat-stream::-webkit-scrollbar-thumb { background: rgba(212,175,111,0.35); border-radius: 999px; }
+
+  /* Yazıyor imleci (typewriter) */
+  .type-caret::after { content: '▍'; color: var(--btg-gold); margin-left: 2px; animation: caretBlink 0.9s steps(1) infinite; }
+  @keyframes caretBlink { 50% { opacity: 0; } }
+  .rec-card.pop { opacity: 0; transform: translateY(14px); animation: recPop 0.5s var(--ease-out) forwards; }
+  @keyframes recPop { to { opacity: 1; transform: none; } }
+
+  @media (max-width: 1100px) {
+    .ai-hero-grid { grid-template-columns: 1fr; gap: 40px; }
+    .ai-console .chat-stream { max-height: 360px; }
+  }
+
   /* ── LIVE MATCHING ENGINE ────────────────────────────────── */
   .chat-stream { display: flex; flex-direction: column; }
   .chat-input-bar {
@@ -899,6 +972,7 @@
         <span>Ocak · MMXXVI</span>
       </div>
       <nav class="mast-nav">
+        <a href="#ai">Asistan</a>
         <a href="#manifesto">Manifesto</a>
         <a href="#hikaye">Hikâye</a>
         <a href="#kolleksiyon">Koleksiyon</a>
@@ -916,54 +990,68 @@
   </div>
 </header>
 
-<!-- ════════════════════════════════════════════════ COVER -->
-<section class="cover">
+<!-- ════════════════════════════════════════════════ AI HERO -->
+<section class="ai-hero" id="ai">
+  <div class="ai-hero-glow"></div>
   <div class="container-wide">
     <div class="cover-meta mono">
       <div class="cover-meta-left">
-        <span class="label">Bahar Sayısı</span>
+        <span class="label">Yapay Zekâ Seyahat Asistanı</span>
         <span>Anadolu · Akdeniz · Manevi rotalar</span>
       </div>
       <span>www.birturlagel.com</span>
     </div>
 
-    <div class="cover-grid">
-      <div class="reveal in">
-        <h1>Bir <em>tur</em> ile gel,<br>bir <em>başka</em> sen ol.</h1>
-        <p class="cover-dek">Booking.com sana kırk yedi sayfa liste sunar. Biz üç tane mükemmel öneri sunarız — kişiliğine, bütçene, ruh haline özel. Sessiz, aile dostu, helal konseptte.</p>
-        <div class="cover-cta-row">
-          <a href="#abone" class="btn-arrow">
-            <span>Seyahat DNA'mı keşfet</span>
-            <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </a>
-          <a href="#manifesto" class="btn-text">Manifesto'yu oku</a>
-        </div>
+    <div class="ai-hero-grid">
+      <div class="ai-hero-intro reveal in">
+        <span class="ai-badge"><span class="ai-dot"></span> BirTurlaGel AI · canlı</span>
+        <h1>Yaz, ve <em>tatilin</em><br>kendini bulsun.</h1>
+        <p class="ai-hero-dek">Booking sana 47 sayfa liste verir. Sen tek cümle yaz — yapay zekâ bütçeni, ruh hâlini ve kişiliğini okuyup yalnızca <em>üç</em> mükemmel öneri çıkarır. Sessiz, aile dostu, helal konseptte.</p>
 
         <div class="cover-stats">
-          <div>
-            <div class="stat-num">14.382<sup>+</sup></div>
-            <div class="stat-label">Erken kayıt</div>
-          </div>
-          <div>
-            <div class="stat-num">2.400</div>
-            <div class="stat-label">Doğrulanmış otel</div>
-          </div>
-          <div>
-            <div class="stat-num">%94</div>
-            <div class="stat-label">Eşleşme isabeti</div>
-          </div>
-          <div>
-            <div class="stat-num">81</div>
-            <div class="stat-label">Şehirde aktif</div>
-          </div>
+          <div><div class="stat-num">14.382<sup>+</sup></div><div class="stat-label">Erken kayıt</div></div>
+          <div><div class="stat-num">2.400</div><div class="stat-label">Doğrulanmış otel</div></div>
+          <div><div class="stat-num">%94</div><div class="stat-label">Eşleşme isabeti</div></div>
         </div>
       </div>
 
-      <div class="reveal in" style="transition-delay: 0.2s">
-        <div class="cover-card">
-          <div class="cover-card-stamp">İlk<br>3.000<br>üye</div>
-          <div class="cover-card-img"></div>
-          <p class="cover-card-cap">Pamukkale, Şubat 2026<br>— sessiz dönem, kar altında traverten —</p>
+      <div class="ai-console reveal in" style="transition-delay: 0.15s">
+        <div class="ai-console-hd">
+          <div class="ai-console-avatar">B</div>
+          <div class="ai-console-meta">
+            <strong>BirTurlaGel Asistanı</strong>
+            <span><span class="ai-dot"></span> Çevrimiçi · Türkçe · GMT+3</span>
+          </div>
+        </div>
+
+        <div class="chat-stream" id="chatStream">
+          <div class="msg-row">
+            <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Asistan</div>
+            <div class="msg-bubble msg-ai">
+              <strong>Merhaba 👋 Nasıl bir tatil arıyorsun?</strong><br><br>
+              Bütçeni, tarihini, kiminle gittiğini ve ruh hâlini bir cümleyle yaz. Niyetini çözer, 2.400 tesisi <em>uygunluğa göre</em> skorlar, sana üç öneri sunarım. Hiçbirinde alkol, kalabalık, aldatıcı fotoğraf yok.
+            </div>
+            <div class="msg-suggestions">
+              <span class="conv-mode" data-q="Eylülde 5 gün, bütçem 30 bin, doğa ve termal istiyorum, kalabalık sevmem, aile dostu ve alkolsüz olsun">Termal & aile · 30K</span>
+              <span class="conv-mode" data-q="Antalya'da çocuklu aile için denize yakın, sessiz, kahvaltılı, 5 gece, bütçem 40 bin TL">Denize yakın aile · 40K</span>
+              <span class="conv-mode" data-q="Eşimle Kapadokya'da tarihi ve kültürel bir kaçamak, 3 gece, butik konak, bütçe 18 bin">Kültür · çift · 18K</span>
+              <span class="conv-mode" data-q="Manevi bir mola, cami yakını, sessiz, namaz alanı olsun, tek başıma 4 gün, 12 bin bütçe">Manevi · sessiz · 12K</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="chat-input-bar">
+          <input id="chatInput" type="text" placeholder="Bütçeni, tarihini, ruh hâlini yaz…" autocomplete="off" />
+          <button class="chat-send" id="chatSend" aria-label="Gönder">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="chat-quick" id="chatModes">
+          <span class="conv-mode" data-mode="huzur">❋ Huzur</span>
+          <span class="conv-mode" data-mode="aile">⌂ Aile</span>
+          <span class="conv-mode" data-mode="manevi">☾ Manevi</span>
+          <span class="conv-mode" data-mode="kultur">◎ Kültür</span>
+          <span class="conv-mode" data-mode="surpriz">⚄ Sürpriz</span>
         </div>
       </div>
     </div>
@@ -1073,43 +1161,32 @@
         <div class="chat-doc-hd">
           <div class="chat-doc-avatar">B</div>
           <div class="chat-doc-meta">
-            <strong>BirTurlaGel Asistanı</strong>
-            Aktif · Türkçe · GMT+3
+            <strong>Örnek Yanıt · Çıktı Anatomisi</strong>
+            Her öneri dört başlıkla gelir
           </div>
         </div>
 
-        <div class="chat-stream" id="chatStream">
-          <div class="msg-row">
-            <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Örnek · Kullanıcı</div>
-            <div class="msg-bubble msg-user">Eylülde 5 gün, bütçem 30K, doğa ve termal istiyorum. Kalabalık sevmem, aile dostu olsun. Alkolsüz tesis tercih ederim.</div>
-          </div>
-          <div class="msg-row">
-            <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Asistan</div>
-            <div class="msg-bubble msg-ai">
-              <strong>Aşağıdan kendi cümleni yaz</strong> — bütçe, tarih, ruh hâli, kimle gittiğin. Asistan niyetini çözer, 2.400 tesisi <em>uygunluğa göre</em> skorlar ve sana yalnızca üç öneri sunar. Hiçbirinde alkol, kalabalık, aldatıcı fotoğraf yok.
-            </div>
-            <div class="msg-suggestions">
-              <span class="conv-mode" data-q="Eylülde 5 gün, bütçem 30 bin, doğa ve termal istiyorum, kalabalık sevmem, aile dostu ve alkolsüz olsun">Termal & aile · 30K</span>
-              <span class="conv-mode" data-q="Antalya'da çocuklu aile için denize yakın, sessiz, kahvaltılı, 5 gece, bütçem 40 bin TL">Denize yakın aile · 40K</span>
-              <span class="conv-mode" data-q="Eşimle Kapadokya'da tarihi ve kültürel bir kaçamak, 3 gece, butik konak, bütçe 18 bin">Kültür · çift · 18K</span>
-              <span class="conv-mode" data-q="Manevi bir mola, cami yakını, sessiz, namaz alanı olsun, tek başıma 4 gün, 12 bin bütçe">Manevi · sessiz · 12K</span>
-            </div>
-          </div>
+        <div class="msg-row">
+          <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Sen</div>
+          <div class="msg-bubble msg-user">Antalya'da çocuklu aile için denize yakın, sessiz, 5 gece, bütçem 40 bin.</div>
         </div>
 
-        <div class="chat-input-bar">
-          <input id="chatInput" type="text" placeholder="Bütçeni, tarihini, ruh hâlini yaz…" autocomplete="off" />
-          <button class="chat-send" id="chatSend" aria-label="Gönder">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </button>
+        <div class="rec-card">
+          <div class="rec-head">
+            <div class="rec-rank">①</div>
+            <div class="rec-title"><strong>Kalkan Taş Ev</strong><span>Antalya · Kalkan · 8 oda</span></div>
+            <div class="rec-ring" style="--p:94"><b>94</b></div>
+          </div>
+          <div class="rec-line"><div class="k">Neden uygun</div><div class="v">aile dostu düzen, denize yakın, sessiz koy, bütçene uygun.</div></div>
+          <div class="rec-line"><div class="k">Riskler</div><div class="v">Yüksek sezon fiyatı; oda sayısı az, erken rezervasyon şart.</div></div>
+          <div class="rec-line"><div class="k">Kimler için</div><div class="v">Denize yakın, sakin ve butik konaklama isteyen aileler.</div></div>
         </div>
-        <div class="chat-quick" id="chatModes">
-          <span class="conv-mode" data-mode="huzur">❋ Huzur</span>
-          <span class="conv-mode" data-mode="aile">⌂ Aile</span>
-          <span class="conv-mode" data-mode="manevi">☾ Manevi</span>
-          <span class="conv-mode" data-mode="kultur">◎ Kültür</span>
-          <span class="conv-mode" data-mode="surpriz">⚄ Sürpriz</span>
-        </div>
+        <div class="rec-alt"><strong>Alternatif:</strong> Bütçeyi esnetmeden <em>Şile Deniz Feneri Konağı</em> — %87 uyum, şehre yakın ama sakin.</div>
+
+        <a href="#ai" class="btn-arrow" style="margin-top:22px; background:var(--btg-gold); color:var(--btg-midnight);">
+          <span>Kendi cümleni dene</span>
+          <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </a>
       </div>
     </div>
   </div>
@@ -1861,22 +1938,39 @@
     return row;
   }
 
-  function fmtNights(n){ return n; }
+  // Akan metin (typewriter) — kelimeleri tek tek yazar, "canlı AI" hissi
+  function streamText(el, text, done){
+    el.classList.add('type-caret');
+    let i = 0;
+    (function step(){
+      if (i <= text.length){
+        el.textContent = text.slice(0, i);
+        stream.scrollTop = stream.scrollHeight;
+        const ch = text[i-1];
+        i++;
+        setTimeout(step, ch===' ' ? 10 : (',.!?:'.includes(ch) ? 60 : 16));
+      } else {
+        el.classList.remove('type-caret');
+        done && done();
+      }
+    })();
+  }
 
   function renderResults(intent, ranked){
     const top3 = ranked.slice(0,3);
     const alt  = ranked[3];
     const i = intent;
     const moodTop = Object.entries(i.mood).sort((a,b)=>b[1]-a[1])[0][0];
-    const understanding = `<strong>Anladım.</strong> ${i.location?`<em>${i.location.charAt(0).toUpperCase()+i.location.slice(1)}</em> bölgesinde, `:''}`+
-      `${i.budget?`₺${i.budget.toLocaleString('tr-TR')} bütçe, `:''}${fmtNights(i.nights)} gece, `+
+    const understanding =
+      `Anladım. ${i.location?i.location.charAt(0).toUpperCase()+i.location.slice(1)+' bölgesinde, ':''}`+
+      `${i.budget?'₺'+i.budget.toLocaleString('tr-TR')+' bütçe, ':''}${i.nights} gece, `+
       `“${MOOD_LABELS[moodTop].toLowerCase()}” ağırlıklı bir profil görüyorum`+
       `${i.constraints.halal?' · helal/alkolsüz':''}${i.constraints.family?' · aile dostu':''}${i.constraints.quiet?' · sessiz':''}. `+
-      `2.400 tesisi skorladım, en uygun üçü:`;
+      `2.400 tesisi skorladım — en uygun üçü:`;
 
-    let cards = top3.map((r,idx)=>{
+    const cards = top3.map((r,idx)=>{
       const h=r.hotel;
-      return `<div class="rec-card">
+      return `<div class="rec-card pop" style="animation-delay:${idx*0.14}s">
         <div class="rec-head">
           <div class="rec-rank">${['①','②','③'][idx]}</div>
           <div class="rec-title"><strong>${h.name}</strong><span>${h.city} · ${h.type}</span></div>
@@ -1887,25 +1981,29 @@
         <div class="rec-line"><div class="k">Kimler için</div><div class="v">${h.forWhom}</div></div>
         <div class="rec-detail-btn" data-detail="${h.id}" data-pct="${r.pct}">Skor kırılımını gör →</div>
       </div>`;
-    }).join('');
+    }).join('') +
+    (alt ? `<div class="rec-alt pop" style="animation-delay:${top3.length*0.14}s"><strong>Alternatif:</strong> Bütçeyi biraz esnetebilirsen <em>${alt.hotel.name}</em> (${alt.hotel.city}) — %${alt.pct} uyum, ${alt.hotel.forWhom.toLowerCase()}</div>` : '');
 
-    if (alt){
-      cards += `<div class="rec-alt"><strong>Alternatif:</strong> Bütçeyi biraz esnetebilirsen <em>${alt.hotel.name}</em> (${alt.hotel.city}) — %${alt.pct} uyum, ${alt.hotel.forWhom.toLowerCase()}</div>`;
-    }
+    // boş AI balonu → önce metni akıt, sonra kartları aç
+    const row = bubble('ai', '');
+    const bub = row.querySelector('.msg-bubble');
+    const uEl = document.createElement('div'); bub.appendChild(uEl);
+    const cardsWrap = document.createElement('div'); bub.appendChild(cardsWrap);
 
-    const row = bubble('ai', understanding + cards);
-    // detay butonları
-    row.querySelectorAll('[data-detail]').forEach(btn=>{
-      btn.addEventListener('click', ()=> openModal(btn.dataset.detail, parseInt(btn.dataset.pct,10), intent));
+    streamText(uEl, understanding, ()=>{
+      cardsWrap.innerHTML = cards;
+      cardsWrap.querySelectorAll('[data-detail]').forEach(btn=>{
+        btn.addEventListener('click', ()=> openModal(btn.dataset.detail, parseInt(btn.dataset.pct,10), intent));
+      });
+      const sug = document.createElement('div');
+      sug.className='msg-suggestions';
+      sug.innerHTML = `<span class="conv-mode" data-q="Daha ekonomik bir alternatif var mı?">Daha ekonomik?</span>`+
+        `<span class="conv-mode" data-q="Bunlardan en sessiz olanı hangisi?">En sessiz hangisi?</span>`+
+        `<span class="conv-mode" data-q="${top3[0].hotel.name} hakkında detay ver">${top3[0].hotel.name.split(' ')[0]} detay</span>`;
+      sug.querySelectorAll('[data-q]').forEach(c=> c.addEventListener('click', ()=> submit(c.dataset.q)));
+      bub.appendChild(sug);
+      stream.scrollTop = stream.scrollHeight;
     });
-    // takip önerileri
-    const sug = document.createElement('div');
-    sug.className='msg-suggestions';
-    sug.innerHTML = `<span class="conv-mode" data-q="Daha ekonomik bir alternatif var mı?">Daha ekonomik?</span>`+
-      `<span class="conv-mode" data-q="Bunlardan en sessiz olanı hangisi?">En sessiz hangisi?</span>`+
-      `<span class="conv-mode" data-q="${top3[0].hotel.name} hakkında detay ver">${top3[0].hotel.name.split(' ')[0]} detay</span>`;
-    sug.querySelectorAll('[data-q]').forEach(c=> c.addEventListener('click', ()=> submit(c.dataset.q)));
-    row.appendChild(sug);
   }
 
   function submit(text){
@@ -1990,7 +2088,7 @@
   document.querySelectorAll('.conv-side .conv-mode').forEach((m,idx)=>{
     const keys=['kultur','surpriz','aile','manevi','huzur','aile'];
     m.style.cursor='pointer';
-    m.addEventListener('click', ()=>{ document.getElementById('hikaye').scrollIntoView({behavior:'smooth'}); submit(MODE_Q[keys[idx]]||MODE_Q.huzur); });
+    m.addEventListener('click', ()=>{ document.getElementById('ai').scrollIntoView({behavior:'smooth'}); setTimeout(()=>submit(MODE_Q[keys[idx]]||MODE_Q.huzur), 450); });
   });
 
   // koleksiyon satırları → otel detay modalı (ilk 6 kayıt sırayla)
