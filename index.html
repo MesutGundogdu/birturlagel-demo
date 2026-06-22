@@ -766,6 +766,108 @@
     .method-step { grid-template-columns: 100px 1fr; gap: 32px; padding: 40px 0 !important; }
     .method-decor { display: none; }
   }
+  /* ── LIVE MATCHING ENGINE ────────────────────────────────── */
+  .chat-stream { display: flex; flex-direction: column; }
+  .chat-input-bar {
+    display: flex; gap: 8px; align-items: center;
+    margin-top: 22px; padding: 8px;
+    background: rgba(244, 234, 213, 0.06);
+    border: 1px solid rgba(212, 175, 111, 0.28);
+    border-radius: 999px;
+    transition: border-color 0.3s var(--ease-out);
+  }
+  .chat-input-bar:focus-within { border-color: var(--btg-gold); }
+  .chat-input-bar input {
+    flex: 1; border: none; background: transparent; outline: none;
+    font-family: var(--font-body); font-size: 14px; color: var(--btg-cream);
+    padding: 10px 16px;
+  }
+  .chat-input-bar input::placeholder { color: rgba(244, 234, 213, 0.45); }
+  .chat-send {
+    width: 42px; height: 42px; border-radius: 50%; flex: 0 0 auto;
+    background: var(--btg-gold); color: var(--btg-midnight);
+    display: grid; place-items: center;
+    transition: all 0.3s var(--ease-out);
+  }
+  .chat-send:hover { background: var(--btg-saffron); transform: scale(1.06); }
+  .chat-send:disabled { opacity: 0.4; cursor: not-allowed; }
+  .chat-quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .chat-quick .conv-mode { cursor: pointer; font-size: 10px; padding: 7px 13px; }
+  .conv-mode[role="button"], .msg-suggestions .conv-mode { cursor: pointer; }
+
+  .thinking { display: inline-flex; gap: 5px; padding: 4px 0; }
+  .thinking span {
+    width: 7px; height: 7px; border-radius: 50%; background: var(--btg-gold);
+    animation: thinkPulse 1.2s var(--ease-soft) infinite;
+  }
+  .thinking span:nth-child(2) { animation-delay: 0.2s; }
+  .thinking span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes thinkPulse { 0%, 60%, 100% { opacity: 0.25; transform: translateY(0); } 30% { opacity: 1; transform: translateY(-3px); } }
+
+  /* Recommendation cards inside chat */
+  .rec-card {
+    background: rgba(244, 234, 213, 0.05);
+    border: 1px solid rgba(212, 175, 111, 0.22);
+    border-radius: 16px; padding: 18px 20px; margin-top: 12px;
+    position: relative;
+  }
+  .rec-head { display: flex; align-items: center; gap: 14px; margin-bottom: 12px; }
+  .rec-rank { font-family: var(--font-italic); font-style: italic; font-size: 30px; color: var(--btg-gold); line-height: 1; }
+  .rec-title { flex: 1; }
+  .rec-title strong { font-family: var(--font-display); font-size: 19px; font-weight: 500; color: var(--btg-cream); display: block; line-height: 1.1; }
+  .rec-title span { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; color: rgba(244,234,213,0.55); text-transform: uppercase; }
+  .rec-ring {
+    width: 56px; height: 56px; border-radius: 50%; flex: 0 0 auto;
+    display: grid; place-items: center; text-align: center;
+    background: conic-gradient(var(--btg-gold) calc(var(--p) * 1%), rgba(244,234,213,0.12) 0);
+    position: relative;
+  }
+  .rec-ring::before { content: ''; position: absolute; inset: 5px; border-radius: 50%; background: var(--btg-deep-blue); }
+  .rec-ring b { position: relative; font-family: var(--font-display); font-size: 17px; color: var(--btg-cream); font-weight: 600; }
+  .rec-line { display: grid; grid-template-columns: 84px 1fr; gap: 10px; padding: 5px 0; font-size: 13px; line-height: 1.45; }
+  .rec-line .k { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--btg-gold); padding-top: 3px; }
+  .rec-line .v { font-family: var(--font-edit); font-style: italic; font-size: 14.5px; color: rgba(244,234,213,0.9); }
+  .rec-alt { margin-top: 12px; padding-top: 12px; border-top: 1px dashed rgba(212,175,111,0.2); font-family: var(--font-edit); font-style: italic; font-size: 14px; color: rgba(244,234,213,0.75); }
+  .rec-alt strong { color: var(--btg-gold); font-style: normal; font-family: var(--font-body); font-weight: 500; }
+  .rec-detail-btn { margin-top: 10px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--btg-gold); border-bottom: 1px solid rgba(212,175,111,0.4); padding-bottom: 2px; cursor: pointer; transition: color 0.2s; }
+  .rec-detail-btn:hover { color: var(--btg-saffron); }
+
+  /* ── HOTEL DETAIL MODAL ──────────────────────────────────── */
+  .btg-modal {
+    position: fixed; inset: 0; z-index: 200;
+    display: none; place-items: center; padding: 24px;
+    background: rgba(10, 25, 41, 0.55); backdrop-filter: blur(8px);
+  }
+  .btg-modal.open { display: grid; }
+  .btg-modal-card {
+    background: var(--btg-paper); border-radius: 24px;
+    max-width: 620px; width: 100%; max-height: 88vh; overflow-y: auto;
+    padding: 40px; position: relative;
+    box-shadow: 0 40px 100px -20px rgba(10,25,41,0.5);
+    border: 1px solid var(--btg-gold);
+    animation: modalIn 0.5s var(--ease-out);
+  }
+  @keyframes modalIn { from { opacity: 0; transform: translateY(24px) scale(0.98); } to { opacity: 1; transform: none; } }
+  .modal-close { position: absolute; top: 22px; right: 22px; width: 38px; height: 38px; border-radius: 50%; background: var(--btg-cream-warm); color: var(--btg-midnight); display: grid; place-items: center; font-size: 18px; transition: all 0.2s; }
+  .modal-close:hover { background: var(--btg-terra); color: var(--btg-cream); transform: rotate(90deg); }
+  .modal-eyebrow { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--btg-terra); margin-bottom: 10px; }
+  .modal-title { font-family: var(--font-display); font-size: 34px; font-weight: 500; color: var(--btg-midnight); line-height: 1.05; margin-bottom: 6px; font-variation-settings: "opsz" 60; }
+  .modal-sub { font-family: var(--font-edit); font-style: italic; font-size: 17px; color: var(--btg-ink-soft); margin-bottom: 20px; }
+  .modal-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 24px; }
+  .modal-scoreline { display: flex; align-items: baseline; gap: 10px; margin-bottom: 18px; padding-bottom: 18px; border-bottom: 1px solid rgba(10,25,41,0.1); }
+  .modal-scoreline .big { font-family: var(--font-display); font-size: 52px; color: var(--btg-terra); font-weight: 500; line-height: 1; }
+  .modal-scoreline .big sup { font-size: 18px; }
+  .modal-scoreline .lbl { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--btg-ink-muted); }
+  .break-row { display: grid; grid-template-columns: 130px 1fr 44px; gap: 14px; align-items: center; padding: 9px 0; }
+  .break-label { font-family: var(--font-body); font-size: 13px; color: var(--btg-ink); }
+  .break-track { height: 7px; background: rgba(10,25,41,0.08); border-radius: 999px; overflow: hidden; }
+  .break-fill { height: 100%; border-radius: 999px; background: linear-gradient(90deg, var(--btg-saffron), var(--btg-terra)); transition: width 0.9s var(--ease-out); }
+  .break-num { font-family: var(--font-mono); font-size: 12px; color: var(--btg-ink-soft); text-align: right; font-weight: 500; }
+  .modal-note { margin-top: 22px; padding: 18px 20px; background: var(--btg-cream-warm); border-left: 3px solid var(--btg-terra); border-radius: 0 12px 12px 0; font-family: var(--font-edit); font-style: italic; font-size: 15px; line-height: 1.5; color: var(--btg-midnight); }
+  .modal-note + .modal-note { margin-top: 12px; border-left-color: var(--btg-gold); }
+  .modal-note strong { font-style: normal; font-family: var(--font-body); font-weight: 600; color: var(--btg-terra); }
+  body.modal-open { overflow: hidden; }
+
   @media (max-width: 720px) {
     section { padding: 100px 0 !important; }
     .mast-nav { display: none; }
@@ -976,26 +1078,37 @@
           </div>
         </div>
 
-        <div class="msg-row">
-          <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">14:32 · Kullanıcı</div>
-          <div class="msg-bubble msg-user">Eylülde 5 gün, bütçem 30K, doğa ve termal istiyorum. Kalabalık sevmem, aile dostu olsun. Alkolsüz tesis tercih ederim.</div>
+        <div class="chat-stream" id="chatStream">
+          <div class="msg-row">
+            <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Örnek · Kullanıcı</div>
+            <div class="msg-bubble msg-user">Eylülde 5 gün, bütçem 30K, doğa ve termal istiyorum. Kalabalık sevmem, aile dostu olsun. Alkolsüz tesis tercih ederim.</div>
+          </div>
+          <div class="msg-row">
+            <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">Asistan</div>
+            <div class="msg-bubble msg-ai">
+              <strong>Aşağıdan kendi cümleni yaz</strong> — bütçe, tarih, ruh hâli, kimle gittiğin. Asistan niyetini çözer, 2.400 tesisi <em>uygunluğa göre</em> skorlar ve sana yalnızca üç öneri sunar. Hiçbirinde alkol, kalabalık, aldatıcı fotoğraf yok.
+            </div>
+            <div class="msg-suggestions">
+              <span class="conv-mode" data-q="Eylülde 5 gün, bütçem 30 bin, doğa ve termal istiyorum, kalabalık sevmem, aile dostu ve alkolsüz olsun">Termal & aile · 30K</span>
+              <span class="conv-mode" data-q="Antalya'da çocuklu aile için denize yakın, sessiz, kahvaltılı, 5 gece, bütçem 40 bin TL">Denize yakın aile · 40K</span>
+              <span class="conv-mode" data-q="Eşimle Kapadokya'da tarihi ve kültürel bir kaçamak, 3 gece, butik konak, bütçe 18 bin">Kültür · çift · 18K</span>
+              <span class="conv-mode" data-q="Manevi bir mola, cami yakını, sessiz, namaz alanı olsun, tek başıma 4 gün, 12 bin bütçe">Manevi · sessiz · 12K</span>
+            </div>
+          </div>
         </div>
 
-        <div class="msg-row">
-          <div class="mono-tight" style="color: rgba(244,234,213,0.4); margin-bottom: 4px;">14:32 · Asistan</div>
-          <div class="msg-bubble msg-ai">
-            <strong>Anladım. Senin için “huzur arayan” profilini öne çıkarıyorum.</strong><br><br>
-            Aile dostu, helal konsept, sessiz dönem önceliği var. Üç önerim:<br><br>
-            ① <strong>Pamukkale Termal Konağı</strong> — %94 uyum<br>
-            ② <strong>Afyon Kaplıca Köyü</strong> — %89 uyum<br>
-            ③ <strong>Bolu Yedigöller Eko-Tesis</strong> — %86 uyum<br><br>
-            Pamukkale'de Şubat'ın ilk haftası özellikle sessiz — travertenler boş, fiyat %22 düşer. İstersen oradan başlayalım?
-          </div>
-          <div class="msg-suggestions">
-            <span class="conv-mode">Pamukkale'yi anlat</span>
-            <span class="conv-mode">Fiyatları kıyasla</span>
-            <span class="conv-mode">Daha sessizini var mı?</span>
-          </div>
+        <div class="chat-input-bar">
+          <input id="chatInput" type="text" placeholder="Bütçeni, tarihini, ruh hâlini yaz…" autocomplete="off" />
+          <button class="chat-send" id="chatSend" aria-label="Gönder">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 8h11M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <div class="chat-quick" id="chatModes">
+          <span class="conv-mode" data-mode="huzur">❋ Huzur</span>
+          <span class="conv-mode" data-mode="aile">⌂ Aile</span>
+          <span class="conv-mode" data-mode="manevi">☾ Manevi</span>
+          <span class="conv-mode" data-mode="kultur">◎ Kültür</span>
+          <span class="conv-mode" data-mode="surpriz">⚄ Sürpriz</span>
         </div>
       </div>
     </div>
@@ -1496,6 +1609,11 @@
   </div>
 </footer>
 
+<!-- ════════════════════════════════════════════════ HOTEL DETAIL MODAL -->
+<div class="btg-modal" id="hotelModal" role="dialog" aria-modal="true">
+  <div class="btg-modal-card" id="modalCard"></div>
+</div>
+
 <script>
   const io = new IntersectionObserver((entries) => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
@@ -1516,6 +1634,371 @@
     });
   }, { threshold: 0.3 });
   document.querySelectorAll('.dna-profile').forEach(el => dnaIO.observe(el));
+
+  /* ═══════════════════════════════════════════════════════════
+     BirTurlaGel — Tarayıcı-içi Eşleştirme Motoru (prototip)
+     Backend yok: niyet çıkarımı + çok kriterli skorlama + 3 öneri.
+     İçerik kuralı: alkol/uygunsuz içerik veri setinde yer almaz.
+     ═══════════════════════════════════════════════════════════ */
+
+  // ── Veri seti (ilk 6 kayıt koleksiyon listesindeki sırayla aynı) ──
+  // mood ağırlıkları 0..1 — tesisin o ruh hâline ne kadar uygun olduğu.
+  const HOTELS = [
+    { id:'h1', name:'Pamukkale Termal Konağı', city:'Denizli · Pamukkale', type:'18 oda · butik', price:4200,
+      mood:{huzur:.95,kultur:.55,aile:.8,macera:.2,gastronom:.6,manevi:.5},
+      sea:0, thermal:1, nature:.8, urban:0, mosque:1, halal:1, family:1, quiet:.95,
+      review:'Misafirler “mutlak sessizlik” ve köy kahvaltısını övüyor; traverten manzarası tekrar tekrar geçiyor.',
+      risk:'Gece hayatı/aktivite bekleyenler için sakin kalabilir; ulaşım için araç önerilir.',
+      forWhom:'Kalabalıktan kaçan, termal + huzur isteyen aileler ve çiftler.' },
+    { id:'h2', name:'Kapadokya Taş Konak', city:'Nevşehir · Göreme', type:'12 oda · konak', price:5800,
+      mood:{huzur:.6,kultur:.95,aile:.6,macera:.7,gastronom:.65,manevi:.45},
+      sea:0, thermal:0, nature:.6, urban:.3, mosque:1, halal:1, family:.7, quiet:.6,
+      review:'Balon manzarası ve tarihî taş oda dokusu en sık övülen iki nokta; sabahları erken hareketlilik var.',
+      risk:'Balon sezonu sabahları erken ve hareketli; mutlak sessizlik arayan için ideal değil.',
+      forWhom:'Tarih ve kültür meraklısı çiftler, fotoğrafçılar.' },
+    { id:'h3', name:'Sapanca Göl Köşkü', city:'Sakarya · Sapanca', type:'24 oda · resort', price:3900,
+      mood:{huzur:.8,kultur:.35,aile:.95,macera:.45,gastronom:.6,manevi:.4},
+      sea:0, thermal:0, nature:.9, urban:.2, mosque:1, halal:1, family:1, quiet:.75,
+      review:'Aileler göl kenarı yürüyüş ve geniş bahçeyi seviyor; çocuk alanları yeterli bulunuyor.',
+      risk:'Hafta sonu İstanbul yakınlığı sebebiyle dolabilir; sessiz dönem için hafta içi tercih edin.',
+      forWhom:'Çocuklu aileler, doğada kısa kaçamak isteyenler.' },
+    { id:'h4', name:'Kalkan Taş Ev', city:'Antalya · Kalkan', type:'8 oda · butik', price:7200,
+      mood:{huzur:.7,kultur:.4,aile:.7,macera:.5,gastronom:.7,manevi:.35},
+      sea:1, thermal:0, nature:.6, urban:.3, mosque:1, halal:1, family:.85, quiet:.7,
+      review:'Deniz manzarası ve sakin koy en güçlü yanı; butik olduğu için kişisel ilgi övülüyor.',
+      risk:'Yüksek sezon fiyatı bütçeyi zorlayabilir; oda sayısı az, erken rezervasyon şart.',
+      forWhom:'Denize yakın, sakin ve butik konaklama isteyen aileler.' },
+    { id:'h5', name:'Boğaz Konağı', city:'İstanbul · Üsküdar', type:'30 oda · klasik', price:5100,
+      mood:{huzur:.5,kultur:.85,aile:.8,macera:.4,gastronom:.7,manevi:.7},
+      sea:.5, thermal:0, nature:.2, urban:1, mosque:1, halal:1, family:.9, quiet:.45,
+      review:'Boğaz manzarası ve şehir merkezine yakınlık öne çıkıyor; tarihî semt dokusu seviliyor.',
+      risk:'Şehir merkezi olduğundan dış ses olabilir; doğa/sessizlik arayan için uygun değil.',
+      forWhom:'Şehirde kültür + manevi rotalar (camiler) isteyen aileler.' },
+    { id:'h6', name:'Bolu Yedigöller Eko-Tesis', city:'Bolu · Yedigöller', type:'14 bungalov', price:3400,
+      mood:{huzur:.95,kultur:.3,aile:.85,macera:.7,gastronom:.5,manevi:.45},
+      sea:0, thermal:0, nature:1, urban:0, mosque:1, halal:1, family:.9, quiet:.95,
+      review:'Orman içi sessizlik ve temiz hava en sık geçen ifadeler; bungalov mahremiyeti seviliyor.',
+      risk:'Kış aylarında yol koşulları zorlaşabilir; lüks otel konforu beklenmemeli.',
+      forWhom:'Doğa, sessizlik ve mahremiyet isteyenler.' },
+    // Motor çeşitliliği için ek tesisler (listede gösterilmez)
+    { id:'h7', name:'Afyon Kaplıca Köyü', city:'Afyonkarahisar', type:'40 oda · termal', price:3100,
+      mood:{huzur:.9,kultur:.4,aile:.9,macera:.2,gastronom:.55,manevi:.55},
+      sea:0, thermal:1, nature:.6, urban:.2, mosque:1, halal:1, family:1, quiet:.8,
+      review:'Termal havuzlar ve aile/kadın havuzu ayrımı sık övülüyor; uygun fiyatı dikkat çekiyor.',
+      risk:'Tesis büyük olduğundan sezonda kalabalık olabilir.',
+      forWhom:'Termal + aile dostu, ekonomik tatil arayanlar.' },
+    { id:'h8', name:'Safranbolu Konağı', city:'Karabük · Safranbolu', type:'10 oda · tarihî', price:2900,
+      mood:{huzur:.65,kultur:.95,aile:.65,macera:.4,gastronom:.6,manevi:.5},
+      sea:0, thermal:0, nature:.5, urban:.4, mosque:1, halal:1, family:.8, quiet:.7,
+      review:'UNESCO dokusu ve otantik konak deneyimi en çok övülen nokta.',
+      risk:'Tarihî yapı; bazı odalar küçük olabilir.',
+      forWhom:'Kültür ve tarih meraklısı, ekonomik butik arayanlar.' },
+    { id:'h9', name:'Ayder Yayla Evi', city:'Rize · Ayder', type:'12 oda · yayla', price:2600,
+      mood:{huzur:.85,kultur:.45,aile:.8,macera:.85,gastronom:.6,manevi:.4},
+      sea:0, thermal:.4, nature:1, urban:0, mosque:1, halal:1, family:.85, quiet:.85,
+      review:'Yeşil yayla, sis ve doğa yürüyüşleri öne çıkıyor; yöresel kahvaltı seviliyor.',
+      risk:'Yağışlı iklim; ulaşım uzun sürebilir.',
+      forWhom:'Doğa ve hafif macera isteyen, yeşil arayanlar.' },
+    { id:'h10', name:'Mardin Taş Avlu', city:'Mardin', type:'9 oda · tarihî', price:3300,
+      mood:{huzur:.6,kultur:.95,aile:.6,macera:.5,gastronom:.8,manevi:.8},
+      sea:0, thermal:0, nature:.3, urban:.6, mosque:1, halal:1, family:.75, quiet:.6,
+      review:'Mezopotamya manzarası, taş mimari ve gastronomi en güçlü yönleri.',
+      risk:'Yaz ayları çok sıcak; sokaklar eğimli.',
+      forWhom:'Kültür + gastronomi + manevi atmosfer isteyenler.' },
+    { id:'h11', name:'Abant Göl Bungalov', city:'Bolu · Abant', type:'16 bungalov', price:3700,
+      mood:{huzur:.9,kultur:.3,aile:.9,macera:.6,gastronom:.5,manevi:.4},
+      sea:0, thermal:0, nature:1, urban:0, mosque:1, halal:1, family:1, quiet:.9,
+      review:'Göl çevresi yürüyüş, temiz hava ve aile dostu düzen öne çıkıyor.',
+      risk:'Hafta sonu günübirlikçi yoğunluğu olabilir.',
+      forWhom:'Doğa + aile, göl manzarası isteyenler.' },
+    { id:'h12', name:'Şile Deniz Feneri Konağı', city:'İstanbul · Şile', type:'15 oda · butik', price:4400,
+      mood:{huzur:.8,kultur:.4,aile:.85,macera:.45,gastronom:.6,manevi:.4},
+      sea:1, thermal:0, nature:.7, urban:.3, mosque:1, halal:1, family:.9, quiet:.75,
+      review:'Karadeniz sahili sessizliği ve İstanbul’a yakınlığı dengeli buluyor.',
+      risk:'Deniz dalgalı olabilir; bazı dönemler rüzgârlı.',
+      forWhom:'Denize yakın ama sakin, şehre yakın aileler.' },
+  ];
+
+  const MOOD_LABELS = { huzur:'Huzur', kultur:'Kültür', aile:'Aile', macera:'Macera', gastronom:'Gastronomi', manevi:'Manevi' };
+
+  // ── Niyet çıkarımı: serbest Türkçe metin → yapısal niyet ──
+  function parseIntent(text){
+    const t = (' ' + text.toLowerCase() + ' ')
+      .replace(/i̇/g,'i'); // normalize Turkish dotted i
+    const has = (...ws) => ws.some(w => t.includes(w));
+
+    // Bütçe (toplam): "40 bin", "40bin", "40k", "40.000", "30 000"
+    let budget = null;
+    const bin = t.match(/(\d+(?:[.,]\d+)?)\s*(?:bin|k\b)/);
+    if (bin) budget = Math.round(parseFloat(bin[1].replace(',','.')) * 1000);
+    if (!budget){ const big = t.match(/(\d{4,6})/); if (big) budget = parseInt(big[1],10); }
+
+    // Gece sayısı
+    let nights = null;
+    const ng = t.match(/(\d+)\s*(?:gece|gün|gun)/);
+    if (ng) nights = parseInt(ng[1],10);
+
+    // Ruh hâli ağırlıkları
+    const mood = { huzur:0, kultur:0, aile:0, macera:0, gastronom:0, manevi:0 };
+    if (has('sessiz','huzur','dinlen','sakin','kalabalık sev','kalabalik sev')) mood.huzur += 1;
+    if (has('termal','kaplıca','kaplica','şifa','sifa')) { mood.huzur += .6; }
+    if (has('kültür','kultur','tarihi','tarihî','müze','muze','otantik','antik')) mood.kultur += 1;
+    if (has('aile','çocuk','cocuk','çoluk','aileme')) mood.aile += 1;
+    if (has('macera','trekking','doğa yürüyüş','yürüyüş','yuruyus','dağ','dag','rafting')) mood.macera += 1;
+    if (has('yemek','lezzet','mutfak','gastronomi','kahvaltı','kahvalti')) mood.gastronom += 1;
+    if (has('manevi','cami','namaz','hac','umre','mescit','dinî','dini','huzurlu ibadet')) mood.manevi += 1;
+    if (has('doğa','doga','yeşil','yesil','orman','göl','gol','yayla')) { mood.huzur += .4; mood.macera += .3; }
+    // hiçbir sinyal yoksa hafif huzur varsayımı
+    if (Object.values(mood).every(v => v===0)) mood.huzur = .5;
+
+    // Kısıtlar
+    const constraints = {
+      halal: has('helal','alkolsüz','alkolsuz','muhafazakar','muhafazakâr','İslami','islami'),
+      family: has('aile','çocuk','cocuk'),
+      quiet: has('sessiz','sakin','kalabalık sev','kalabalik sev','huzur'),
+      sea: has('deniz','sahil','plaj','kıyı','kiyi','kumsal'),
+      thermal: has('termal','kaplıca','kaplica'),
+      nature: has('doğa','doga','yeşil','yesil','orman','göl','gol','yayla','dağ','dag'),
+      mosque: has('cami','namaz','mescit','manevi','hac','umre'),
+    };
+
+    // Lokasyon eşleşmesi (şehir/bölge anahtarları)
+    const places = ['denizli','pamukkale','kapadokya','göreme','goreme','nevşehir','nevsehir','sakarya','sapanca',
+      'antalya','kalkan','istanbul','üsküdar','uskudar','bolu','yedigöller','yedigoller','abant','afyon',
+      'safranbolu','karabük','karabuk','rize','ayder','mardin','şile','sile'];
+    const location = places.find(p => t.includes(p)) || null;
+
+    return { budget, nights: nights || 4, mood, constraints, location, raw:text };
+  }
+
+  // ── Skorlama: niyet + tesis → 0..100 + faktör kırılımı ──
+  function scoreHotel(h, intent){
+    // 1) Ruh hâli uyumu (kosinüs benzerliği) — %30
+    const keys = Object.keys(intent.mood);
+    let dot=0, ma=0, mb=0;
+    keys.forEach(k => { dot += intent.mood[k]*h.mood[k]; ma += intent.mood[k]**2; mb += h.mood[k]**2; });
+    const moodScore = (ma && mb) ? dot/Math.sqrt(ma*mb) : 0;
+
+    // 2) Bütçe uyumu — %20  (gece başı ~ bütçe/gece)
+    let budgetScore = .7;
+    if (intent.budget){
+      const perNight = intent.budget / intent.nights;
+      const r = perNight / h.price;
+      if (r >= 1) budgetScore = Math.min(1, .9 + (r-1)*0.1);      // bütçe yetiyor
+      else budgetScore = Math.max(0, r*r);                         // aşıyorsa hızlı düşer
+    }
+
+    // 3) Kısıt uyumu — %20
+    const c = intent.constraints; let cHit=0, cTot=0;
+    const need = (flag, val) => { if(flag){ cTot++; cHit += val; } };
+    need(c.halal, h.halal); need(c.family, h.family); need(c.quiet, h.quiet);
+    need(c.sea, h.sea); need(c.thermal, h.thermal); need(c.nature, h.nature); need(c.mosque, h.mosque);
+    const constraintScore = cTot ? cHit/cTot : .8;
+
+    // 4) Lokasyon — %15
+    let locScore = .6;
+    if (intent.location){
+      // Kullanıcı açıkça bir yer belirttiyse o yer baskın olmalı. Ad + şehir alanına bak.
+      const hay = (h.city + ' ' + h.name).toLowerCase().replace(/i̇/g,'i');
+      locScore = hay.includes(intent.location) ? 1 : .05;
+    }
+
+    // 5) Özellik bonusu — %10
+    let feat=0, fTot=0;
+    [['sea',c.sea],['thermal',c.thermal],['nature',c.nature]].forEach(([k,want])=>{ if(want){ fTot++; feat+=h[k]; }});
+    const featScore = fTot ? feat/fTot : .7;
+
+    // 6) Yenilik — %5 (id'den deterministik küçük varyasyon)
+    const novelty = ((parseInt(h.id.slice(1),10)*37)%100)/100;
+
+    const total = moodScore*.25 + budgetScore*.20 + constraintScore*.20 + locScore*.20 + featScore*.10 + novelty*.05;
+    const pct = Math.round(60 + total*38); // 60..98 aralığına haritalama
+
+    return {
+      hotel:h, pct,
+      breakdown:[
+        {label:'Kişilik / ruh hâli', v:moodScore},
+        {label:'Bütçe uyumu', v:budgetScore},
+        {label:'Kısıtlar (helal/aile)', v:constraintScore},
+        {label:'Lokasyon', v:locScore},
+        {label:'Özellik (deniz/termal/doğa)', v:featScore},
+        {label:'Yenilik bonusu', v:novelty},
+      ],
+      intent
+    };
+  }
+
+  function rankHotels(intent){
+    return HOTELS.map(h => scoreHotel(h, intent)).sort((a,b)=> b.pct - a.pct);
+  }
+
+  // “Neden uygun” gerekçesini eşleşen faktörlerden üret
+  function buildWhy(res){
+    const i = res.intent, h = res.hotel, bits=[];
+    const topMood = Object.entries(i.mood).sort((a,b)=>b[1]-a[1])[0];
+    if (topMood && topMood[1] > 0) bits.push(`${MOOD_LABELS[topMood[0]].toLowerCase()} profiline güçlü uyum`);
+    if (i.constraints.halal && h.halal) bits.push('helal konsept & alkolsüz');
+    if (i.constraints.family && h.family>=.8) bits.push('aile dostu düzen');
+    if (i.constraints.quiet && h.quiet>=.75) bits.push('sessiz dönem önceliği');
+    if (i.constraints.sea && h.sea) bits.push('denize yakın');
+    if (i.constraints.thermal && h.thermal) bits.push('termal imkân');
+    if (i.constraints.nature && h.nature>=.7) bits.push('doğa içinde');
+    if (i.budget){ const pn=Math.round(i.budget/i.nights); if (pn>=h.price) bits.push(`bütçene uygun (₺${h.price.toLocaleString('tr-TR')}/gece)`); }
+    if (!bits.length) bits.push('genel profiline dengeli uyum');
+    return bits.slice(0,4).join(', ') + '.';
+  }
+
+  // ── DOM render ──
+  const stream = document.getElementById('chatStream');
+  const input  = document.getElementById('chatInput');
+
+  function bubble(role, html){
+    const row = document.createElement('div');
+    row.className = 'msg-row';
+    row.innerHTML = `<div class="mono-tight" style="color:rgba(244,234,213,0.4);margin-bottom:4px;">${role==='user'?'Sen':'Asistan'}</div>`+
+      `<div class="msg-bubble ${role==='user'?'msg-user':'msg-ai'}">${html}</div>`;
+    stream.appendChild(row);
+    return row;
+  }
+
+  function fmtNights(n){ return n; }
+
+  function renderResults(intent, ranked){
+    const top3 = ranked.slice(0,3);
+    const alt  = ranked[3];
+    const i = intent;
+    const moodTop = Object.entries(i.mood).sort((a,b)=>b[1]-a[1])[0][0];
+    const understanding = `<strong>Anladım.</strong> ${i.location?`<em>${i.location.charAt(0).toUpperCase()+i.location.slice(1)}</em> bölgesinde, `:''}`+
+      `${i.budget?`₺${i.budget.toLocaleString('tr-TR')} bütçe, `:''}${fmtNights(i.nights)} gece, `+
+      `“${MOOD_LABELS[moodTop].toLowerCase()}” ağırlıklı bir profil görüyorum`+
+      `${i.constraints.halal?' · helal/alkolsüz':''}${i.constraints.family?' · aile dostu':''}${i.constraints.quiet?' · sessiz':''}. `+
+      `2.400 tesisi skorladım, en uygun üçü:`;
+
+    let cards = top3.map((r,idx)=>{
+      const h=r.hotel;
+      return `<div class="rec-card">
+        <div class="rec-head">
+          <div class="rec-rank">${['①','②','③'][idx]}</div>
+          <div class="rec-title"><strong>${h.name}</strong><span>${h.city} · ${h.type}</span></div>
+          <div class="rec-ring" style="--p:${r.pct}"><b>${r.pct}</b></div>
+        </div>
+        <div class="rec-line"><div class="k">Neden uygun</div><div class="v">${buildWhy(r)}</div></div>
+        <div class="rec-line"><div class="k">Riskler</div><div class="v">${h.risk}</div></div>
+        <div class="rec-line"><div class="k">Kimler için</div><div class="v">${h.forWhom}</div></div>
+        <div class="rec-detail-btn" data-detail="${h.id}" data-pct="${r.pct}">Skor kırılımını gör →</div>
+      </div>`;
+    }).join('');
+
+    if (alt){
+      cards += `<div class="rec-alt"><strong>Alternatif:</strong> Bütçeyi biraz esnetebilirsen <em>${alt.hotel.name}</em> (${alt.hotel.city}) — %${alt.pct} uyum, ${alt.hotel.forWhom.toLowerCase()}</div>`;
+    }
+
+    const row = bubble('ai', understanding + cards);
+    // detay butonları
+    row.querySelectorAll('[data-detail]').forEach(btn=>{
+      btn.addEventListener('click', ()=> openModal(btn.dataset.detail, parseInt(btn.dataset.pct,10), intent));
+    });
+    // takip önerileri
+    const sug = document.createElement('div');
+    sug.className='msg-suggestions';
+    sug.innerHTML = `<span class="conv-mode" data-q="Daha ekonomik bir alternatif var mı?">Daha ekonomik?</span>`+
+      `<span class="conv-mode" data-q="Bunlardan en sessiz olanı hangisi?">En sessiz hangisi?</span>`+
+      `<span class="conv-mode" data-q="${top3[0].hotel.name} hakkında detay ver">${top3[0].hotel.name.split(' ')[0]} detay</span>`;
+    sug.querySelectorAll('[data-q]').forEach(c=> c.addEventListener('click', ()=> submit(c.dataset.q)));
+    row.appendChild(sug);
+  }
+
+  function submit(text){
+    const q = (text || input.value).trim();
+    if (!q) return;
+    input.value='';
+    bubble('user', q.replace(/</g,'&lt;'));
+    // düşünüyor göstergesi
+    const think = bubble('ai', '<div class="thinking"><span></span><span></span><span></span></div>');
+    const intent = parseIntent(q);
+    const ranked = rankHotels(intent);
+    setTimeout(()=>{
+      think.remove();
+      renderResults(intent, ranked);
+      stream.scrollTop = stream.scrollHeight;
+      think.scrollIntoView({behavior:'smooth', block:'nearest'});
+    }, 650);
+  }
+
+  // ── Modal: otel detayı + skor kırılımı ──
+  const modal = document.getElementById('hotelModal');
+  const modalCard = document.getElementById('modalCard');
+
+  function openModal(hotelId, pct, intent){
+    const h = HOTELS.find(x=>x.id===hotelId);
+    if (!h) return;
+    // intent yoksa nötr bir niyet üret (koleksiyondan açılınca)
+    const res = scoreHotel(h, intent || parseIntent('aile dostu, sessiz, helal'));
+    const usePct = pct || res.pct;
+    const tags = [
+      h.halal?'<span class="dest-tag halal">Helal</span>':'',
+      h.family>=.8?'<span class="dest-tag family">Aile</span>':'',
+      h.thermal?'<span class="dest-tag">Termal</span>':'',
+      h.sea?'<span class="dest-tag">Deniz</span>':'',
+      h.nature>=.7?'<span class="dest-tag">Doğa</span>':'',
+      h.quiet>=.8?'<span class="dest-tag">Sessiz</span>':'',
+    ].filter(Boolean).join('');
+
+    const bars = res.breakdown.map(b=>`
+      <div class="break-row">
+        <div class="break-label">${b.label}</div>
+        <div class="break-track"><div class="break-fill" data-w="${Math.round(b.v*100)}" style="width:0%"></div></div>
+        <div class="break-num">%${Math.round(b.v*100)}</div>
+      </div>`).join('');
+
+    modalCard.innerHTML = `
+      <button class="modal-close" id="modalClose" aria-label="Kapat">✕</button>
+      <div class="modal-eyebrow">Otel Dosyası · AI Uyum Analizi</div>
+      <h3 class="modal-title">${h.name}</h3>
+      <div class="modal-sub">${h.city} · ${h.type} · ₺${h.price.toLocaleString('tr-TR')}/gece</div>
+      <div class="modal-tags">${tags}</div>
+      <div class="modal-scoreline"><span class="big">${usePct}<sup>%</sup></span><span class="lbl">senin için<br>uyum skoru</span></div>
+      ${bars}
+      <div class="modal-note"><strong>Yorum özeti.</strong> ${h.review}</div>
+      <div class="modal-note"><strong>Dikkat / risk.</strong> ${h.risk}</div>
+      <div class="modal-note"><strong>Kimler için.</strong> ${h.forWhom}</div>
+    `;
+    modal.classList.add('open');
+    document.body.classList.add('modal-open');
+    modalCard.querySelector('#modalClose').addEventListener('click', closeModal);
+    requestAnimationFrame(()=> modalCard.querySelectorAll('.break-fill').forEach(f=> f.style.width = f.dataset.w + '%'));
+  }
+  function closeModal(){ modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
+  modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+
+  // ── Olay bağlama ──
+  document.getElementById('chatSend').addEventListener('click', ()=> submit());
+  input.addEventListener('keydown', e=>{ if(e.key==='Enter') submit(); });
+  // seed örnek + takip çipleri
+  document.querySelectorAll('#chatStream [data-q]').forEach(c=> c.addEventListener('click', ()=> submit(c.dataset.q)));
+  // mod çipleri → örnek sorgu
+  const MODE_Q = {
+    huzur:'Sessiz ve huzurlu, doğa içinde, 4 gece, aile dostu ve alkolsüz, bütçe 15 bin',
+    aile:'Çocuklu aile için güvenli, helal konsept, 5 gece, deniz veya göl kenarı, bütçe 35 bin',
+    manevi:'Manevi bir mola, cami yakını, namaz alanı olsun, sessiz, 4 gün, 12 bin bütçe',
+    kultur:'Tarihî ve kültürel bir rota, butik konak, 3 gece, gastronomi de olsun, 18 bin',
+    surpriz:'Sürpriz olsun, bütçem 20 bin, 4 gece, aile dostu ve alkolsüz, gerisini sen seç',
+  };
+  document.querySelectorAll('#chatModes [data-mode]').forEach(m=> m.addEventListener('click', ()=> submit(MODE_Q[m.dataset.mode])));
+  // mod kartları (üst kısımdaki dekoratif modlar) da tıklanabilir
+  document.querySelectorAll('.conv-side .conv-mode').forEach((m,idx)=>{
+    const keys=['kultur','surpriz','aile','manevi','huzur','aile'];
+    m.style.cursor='pointer';
+    m.addEventListener('click', ()=>{ document.getElementById('hikaye').scrollIntoView({behavior:'smooth'}); submit(MODE_Q[keys[idx]]||MODE_Q.huzur); });
+  });
+
+  // koleksiyon satırları → otel detay modalı (ilk 6 kayıt sırayla)
+  document.querySelectorAll('.catalogue .cat-row').forEach((row,idx)=>{
+    const h = HOTELS[idx];
+    if (!h) return;
+    row.addEventListener('click', ()=> openModal(h.id, null, null));
+  });
 </script>
 
 </body>
