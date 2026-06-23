@@ -21,6 +21,16 @@ Backend olmadan, tamamen tarayıcıda:
 > Bu prototip, gerçek çok-ajanlı backend'in (Next.js + FastAPI/LangGraph + Claude) referans spesifikasyonudur.
 > Detaylı yol haritası ve 30 reponun sentezi: [`docs/STRATEJI.md`](docs/STRATEJI.md).
 
+### v0.2 — Yeni
+- **AI kahraman hero:** koyu, parıltılı, canlı konsol; streaming (typewriter) yanıt; aşamalı "düşünüyor" adımları; **tam ekran** sohbet.
+- **Gerçek Claude (opsiyonel):** [`netlify/functions/match.mjs`](netlify/functions/match.mjs). Netlify'da `ANTHROPIC_API_KEY` tanımlanınca site gerçek Claude'a sorar; tanımlı değilse **otomatik yerel motora düşer** (konsoldaki "motor: yerel/Claude" göstergesi).
+- **12 otel** koleksiyonu veriden render edilir; her satır tıklanır → skor kırılımı.
+- **Çalışan Seyahat DNA testi** (5 soru) — profil grafiğini anında günceller, sonucu sohbete bağlar.
+- **Referans backend:** [`services/ai/`](services/ai/) — FastAPI + LangGraph çok-ajanlı iskelet.
+
+#### Gerçek Claude'u açmak
+Netlify panel → Site settings → Environment variables → `ANTHROPIC_API_KEY = sk-ant-...` ekle, yeniden deploy et.
+
 ## Çalıştırma
 Doğrudan `index.html` tarayıcıda açılır. Veya:
 

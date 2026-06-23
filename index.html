@@ -489,8 +489,8 @@
   }
   .cat-row {
     display: grid;
-    grid-template-columns: 80px 1.4fr 200px 140px 100px;
-    gap: 32px;
+    grid-template-columns: 48px 64px 1.5fr 180px 140px 86px 28px;
+    gap: 26px;
     align-items: center;
     padding: 28px 0;
     border-bottom: 1px solid rgba(10, 25, 41, 0.08);
@@ -839,6 +839,89 @@
     .ai-console .chat-stream { max-height: 360px; }
   }
 
+  /* tech-grid + tarama ışığı (hero arka plan) */
+  .ai-hero::before {
+    content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(212,175,111,0.5) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(212,175,111,0.5) 1px, transparent 1px);
+    background-size: 48px 48px;
+    opacity: 0.05;
+    -webkit-mask-image: radial-gradient(ellipse 70% 70% at 70% 40%, #000, transparent 75%);
+            mask-image: radial-gradient(ellipse 70% 70% at 70% 40%, #000, transparent 75%);
+  }
+  .ai-scan { position: absolute; left: 0; right: 0; height: 140px; z-index: 0; pointer-events: none;
+    background: linear-gradient(180deg, transparent, rgba(58,110,165,0.10), transparent);
+    animation: scanMove 7s var(--ease-soft) infinite; }
+  @keyframes scanMove { 0% { top: -140px; } 100% { top: 100%; } }
+
+  /* AI durum rozeti (gerçek API / yerel motor) */
+  .ai-source { margin-left: auto; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(244,234,213,0.45); display: inline-flex; align-items: center; gap: 6px; }
+  .ai-source b { color: var(--btg-gold); font-weight: 500; }
+
+  /* konsol genişlet butonu + tam ekran */
+  .ai-expand { margin-left: auto; width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: rgba(244,234,213,0.6); border: 1px solid rgba(212,175,111,0.25); transition: all 0.2s; flex: 0 0 auto; }
+  .ai-expand:hover { color: var(--btg-gold); border-color: var(--btg-gold); }
+  body.ai-full { overflow: hidden; }
+  body.ai-full .ai-console {
+    position: fixed; inset: 14px; max-width: none; width: auto; z-index: 190;
+    display: flex; flex-direction: column; border-radius: 20px;
+    animation: modalIn 0.4s var(--ease-out);
+  }
+  body.ai-full .ai-console .chat-stream { max-height: none; flex: 1; }
+  body.ai-full .ai-full-dim { position: fixed; inset: 0; z-index: 185; background: rgba(10,25,41,0.6); backdrop-filter: blur(6px); }
+  .ai-full-dim { display: none; }
+
+  /* aşamalı "düşünüyor" adımları */
+  .think-steps { display: flex; flex-direction: column; gap: 6px; font-family: var(--font-mono); font-size: 12px; }
+  .think-steps .ts { display: flex; align-items: center; gap: 9px; opacity: 0.35; transition: opacity 0.35s; color: rgba(244,234,213,0.8); }
+  .think-steps .ts.active { opacity: 1; color: var(--btg-gold); }
+  .think-steps .ts.done { opacity: 0.7; color: var(--color-success); }
+  .think-steps .ts .tdot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; flex: 0 0 auto; }
+  .think-steps .ts.active .tdot { animation: thinkPulse 1s var(--ease-soft) infinite; }
+  .think-steps .ts.done .tdot::after { content: '✓'; position: relative; left: -1px; top: -7px; font-size: 10px; }
+
+  /* görsel plakaları — temaya göre stilize "doğrulanmış" sanat */
+  .img-plate { position: relative; overflow: hidden; }
+  .img-plate::after { content: ''; position: absolute; inset: 0; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='g'><feTurbulence baseFrequency='0.012 0.04' numOctaves='2' seed='7'/></filter><rect width='120' height='120' filter='url(%23g)' opacity='0.5'/></svg>"); }
+  .img-plate.thermal  { background: linear-gradient(160deg,#eef3f6 0%,#cfe0e6 35%,#9fb8c2 70%,#5a7a86 100%); }
+  .img-plate.sea      { background: linear-gradient(160deg,#dff1f4 0%,#7fc2cf 40%,#2f8aa0 75%,#0f4a5c 100%); }
+  .img-plate.nature   { background: linear-gradient(160deg,#e6ecd4 0%,#a8c08a 40%,#5e8a4f 75%,#274d2c 100%); }
+  .img-plate.culture  { background: linear-gradient(160deg,#f0e2c8 0%,#d8b483 40%,#b07b3f 75%,#6e3d1c 100%); }
+  .img-plate.urban    { background: linear-gradient(160deg,#e3e6ee 0%,#a9b2c8 40%,#5d6b8a 75%,#28324a 100%); }
+  .img-plate.lake     { background: linear-gradient(160deg,#e2eef0 0%,#9fcad2 40%,#4f97a6 75%,#1f4f5c 100%); }
+  .img-plate .mountains { position: absolute; bottom: 0; left: 0; right: 0; height: 55%; opacity: 0.45;
+    background:
+      radial-gradient(ellipse 40% 100% at 20% 100%, rgba(255,255,255,0.25), transparent 70%),
+      radial-gradient(ellipse 50% 120% at 70% 100%, rgba(0,0,0,0.18), transparent 70%); }
+  .ai-verify-badge {
+    position: absolute; top: 14px; left: 14px; z-index: 3;
+    display: inline-flex; align-items: center; gap: 7px;
+    padding: 6px 11px; border-radius: 999px;
+    background: rgba(10,25,41,0.55); backdrop-filter: blur(8px);
+    border: 1px solid rgba(74,222,128,0.4);
+    font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: #d7f7e0;
+  }
+  .ai-verify-badge .ai-dot { background: var(--color-success); }
+
+  /* katalog satır küçük görseli */
+  .cat-thumb { width: 64px; height: 64px; border-radius: 12px; flex: 0 0 auto; position: relative; }
+  @media (max-width: 1100px) { .cat-thumb { display: none; } }
+
+  /* DNA hızlı testi */
+  .dna-quiz { position: relative; }
+  .dna-quiz-prog { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--btg-gold); margin-bottom: 16px; text-transform: uppercase; }
+  .dna-quiz-q { font-family: var(--font-display); font-size: 26px; color: var(--btg-cream); line-height: 1.2; margin-bottom: 24px; min-height: 64px; }
+  .dna-quiz-opts { display: flex; flex-direction: column; gap: 10px; }
+  .dna-opt {
+    text-align: left; padding: 14px 18px; border-radius: 14px;
+    background: rgba(244,234,213,0.05); border: 1px solid rgba(212,175,111,0.2);
+    color: var(--btg-cream); font-family: var(--font-edit); font-style: italic; font-size: 16px;
+    transition: all 0.25s var(--ease-out); cursor: pointer;
+  }
+  .dna-opt:hover { background: var(--btg-terra); border-color: var(--btg-terra); transform: translateX(4px); }
+
   /* ── LIVE MATCHING ENGINE ────────────────────────────────── */
   .chat-stream { display: flex; flex-direction: column; }
   .chat-input-bar {
@@ -993,6 +1076,8 @@
 <!-- ════════════════════════════════════════════════ AI HERO -->
 <section class="ai-hero" id="ai">
   <div class="ai-hero-glow"></div>
+  <div class="ai-scan"></div>
+  <div class="ai-full-dim" id="aiFullDim"></div>
   <div class="container-wide">
     <div class="cover-meta mono">
       <div class="cover-meta-left">
@@ -1022,6 +1107,10 @@
             <strong>BirTurlaGel Asistanı</strong>
             <span><span class="ai-dot"></span> Çevrimiçi · Türkçe · GMT+3</span>
           </div>
+          <span class="ai-source" id="aiSource" title="Yanıt kaynağı">motor: <b>yerel</b></span>
+          <button class="ai-expand" id="aiExpand" aria-label="Tam ekran" title="Tam ekran">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 5V2h3M9 2h3v3M12 9v3H9M5 12H2V9" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
         </div>
 
         <div class="chat-stream" id="chatStream">
@@ -1204,9 +1293,11 @@
     </div>
 
     <div class="dest-spread">
-      <div class="dest-image reveal">
+      <div class="dest-image img-plate thermal reveal">
+        <span class="ai-verify-badge"><span class="ai-dot"></span> AI görsel doğrulandı</span>
+        <div class="mountains"></div>
         <div class="dest-image-caption">
-          <span>Fotoğraf · İGO MICE Arşiv</span>
+          <span>Pamukkale · Termal & Doğa</span>
           <span>№ 014 — 015</span>
         </div>
       </div>
@@ -1255,151 +1346,7 @@
       </div>
     </div>
 
-    <div class="reveal-stagger">
-      <div class="cat-row">
-        <div class="cat-num">01</div>
-        <div class="cat-info">
-          <div class="cat-name">Pamukkale Termal Konağı, <em>Denizli</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag halal">Helal</span>
-            <span class="dest-tag family">Aile</span>
-            <span class="dest-tag">Termal</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>Denizli, Pamukkale</strong>
-          18 oda · butik
-        </div>
-        <div class="cat-meta">
-          <strong>₺4.200 / gece</strong>
-          kahvaltı dahil
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">94</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-num">02</div>
-        <div class="cat-info">
-          <div class="cat-name">Kapadokya Taş Konak, <em>Göreme</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag halal">Helal</span>
-            <span class="dest-tag">Kültür</span>
-            <span class="dest-tag">Tarihî yapı</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>Nevşehir, Göreme</strong>
-          12 oda · konak
-        </div>
-        <div class="cat-meta">
-          <strong>₺5.800 / gece</strong>
-          balon manzaralı
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">89</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-num">03</div>
-        <div class="cat-info">
-          <div class="cat-name">Sapanca Göl Köşkü, <em>Sakarya</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag family">Aile</span>
-            <span class="dest-tag">Göl</span>
-            <span class="dest-tag">Doğa</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>Sakarya, Sapanca</strong>
-          24 oda · resort
-        </div>
-        <div class="cat-meta">
-          <strong>₺3.900 / gece</strong>
-          tam pansiyon
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">87</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-num">04</div>
-        <div class="cat-info">
-          <div class="cat-name">Kalkan Taş Ev, <em>Antalya</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag halal">Helal</span>
-            <span class="dest-tag">Butik</span>
-            <span class="dest-tag">Deniz</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>Antalya, Kalkan</strong>
-          8 oda · butik
-        </div>
-        <div class="cat-meta">
-          <strong>₺7.200 / gece</strong>
-          deniz manzaralı
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">86</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-num">05</div>
-        <div class="cat-info">
-          <div class="cat-name">Boğaz Konağı, <em>İstanbul Üsküdar</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag family">Aile</span>
-            <span class="dest-tag">Şehir</span>
-            <span class="dest-tag">Tarihî</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>İstanbul, Üsküdar</strong>
-          30 oda · klasik
-        </div>
-        <div class="cat-meta">
-          <strong>₺5.100 / gece</strong>
-          Boğaz manzaralı
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">85</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-
-      <div class="cat-row">
-        <div class="cat-num">06</div>
-        <div class="cat-info">
-          <div class="cat-name">Bolu Yedigöller Eko-Tesis, <em>Bolu</em></div>
-          <div class="cat-tags">
-            <span class="dest-tag">Doğa</span>
-            <span class="dest-tag">Eko</span>
-            <span class="dest-tag">Sessizlik</span>
-          </div>
-        </div>
-        <div class="cat-meta">
-          <strong>Bolu, Yedigöller</strong>
-          14 bungalov
-        </div>
-        <div class="cat-meta">
-          <strong>₺3.400 / gece</strong>
-          kahvaltı dahil
-        </div>
-        <div class="cat-score">
-          <div class="cat-score-num">83</div>
-        </div>
-        <div class="cat-arrow">→</div>
-      </div>
-    </div>
+    <div class="reveal-stagger" id="catList"><!-- 12 otel JS'ten render edilir --></div>
   </div>
 </section>
 
@@ -1415,49 +1362,49 @@
     </div>
 
     <div class="dna-grid">
-      <div class="dna-profile reveal">
-        <div class="dna-name">Kültür Avcısı, sakin.</div>
-        <div class="dna-id">Profil ID — BTG·001·7842 · Güncel: Ocak 2026</div>
+      <div class="dna-profile reveal" id="dnaProfile">
+        <div class="dna-name" id="dnaName">Kültür Avcısı, sakin.</div>
+        <div class="dna-id" id="dnaId">Profil ID — BTG·001·7842 · Güncel: Ocak 2026</div>
 
-        <div class="dna-row">
+        <div class="dna-row" data-trait="kultur">
           <div class="dna-row-label">Kültür <em>avcısı</em></div>
           <div class="dna-track"><div class="dna-fill terra" style="width: 62%"></div></div>
           <div class="dna-row-num">%62</div>
         </div>
-        <div class="dna-row">
+        <div class="dna-row" data-trait="huzur">
           <div class="dna-row-label">Huzur <em>arayan</em></div>
           <div class="dna-track"><div class="dna-fill gold" style="width: 23%"></div></div>
           <div class="dna-row-num">%23</div>
         </div>
-        <div class="dna-row">
+        <div class="dna-row" data-trait="macera">
           <div class="dna-row-label">Maceracı</div>
           <div class="dna-track"><div class="dna-fill ocean" style="width: 15%"></div></div>
           <div class="dna-row-num">%15</div>
         </div>
-        <div class="dna-row">
+        <div class="dna-row" data-trait="gastronom">
           <div class="dna-row-label">Gastronom</div>
           <div class="dna-track"><div class="dna-fill terra" style="width: 48%"></div></div>
           <div class="dna-row-num">%48</div>
         </div>
-        <div class="dna-row">
+        <div class="dna-row" data-trait="manevi">
           <div class="dna-row-label">Manevi</div>
           <div class="dna-track"><div class="dna-fill gold" style="width: 35%"></div></div>
           <div class="dna-row-num">%35</div>
         </div>
 
-        <p class="dna-summary">
+        <p class="dna-summary" id="dnaSummary">
           <strong>Önerimiz:</strong> Tarihî dokulu, butik konaklamalar — Kapadokya, Mardin, Safranbolu. Yemeği önemse, dinlenmeye de yer bırak. Sessiz dönemlerde seyahat et: Şubat – Mart, Kasım sonu.
         </p>
       </div>
 
-      <div class="dna-side reveal" style="transition-delay: 0.2s">
-        <h3>15 soru, <em>3 dakika.</em><br>Sonra herşey <em>sana</em> ait.</h3>
-        <p>Geleneksel sorulardan değil — “Şehirde kahvaltı eden bir yabancı görsen ne yapardın?” gibi düşünce sorularından oluşur. AI, cevaplarının arasındaki mikro-örüntüleri bulur.</p>
+      <div class="dna-side reveal" id="dnaSide" style="transition-delay: 0.2s">
+        <h3>5 soru, <em>1 dakika.</em><br>Sonra herşey <em>sana</em> ait.</h3>
+        <p>Geleneksel sorulardan değil — düşünce sorularından oluşur. AI, cevaplarının arasındaki mikro-örüntüleri bulur; soldaki profil <em>anında</em> güncellenir.</p>
         <p>Test sonucu kimseyle paylaşılmaz. KVKK altında saklanır, istediğin an silinir.</p>
-        <a href="#abone" class="btn-arrow">
+        <button class="btn-arrow" id="dnaStart" style="background:var(--btg-gold); color:var(--btg-midnight);">
           <span>Teste başla</span>
           <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        </a>
+        </button>
       </div>
     </div>
   </div>
@@ -1956,12 +1903,13 @@
     })();
   }
 
-  function renderResults(intent, ranked){
+  function renderResults(intent, ranked, opts){
+    opts = opts || {};
     const top3 = ranked.slice(0,3);
     const alt  = ranked[3];
     const i = intent;
     const moodTop = Object.entries(i.mood).sort((a,b)=>b[1]-a[1])[0][0];
-    const understanding =
+    const understanding = opts.understanding ||
       `Anladım. ${i.location?i.location.charAt(0).toUpperCase()+i.location.slice(1)+' bölgesinde, ':''}`+
       `${i.budget?'₺'+i.budget.toLocaleString('tr-TR')+' bütçe, ':''}${i.nights} gece, `+
       `“${MOOD_LABELS[moodTop].toLowerCase()}” ağırlıklı bir profil görüyorum`+
@@ -1976,7 +1924,7 @@
           <div class="rec-title"><strong>${h.name}</strong><span>${h.city} · ${h.type}</span></div>
           <div class="rec-ring" style="--p:${r.pct}"><b>${r.pct}</b></div>
         </div>
-        <div class="rec-line"><div class="k">Neden uygun</div><div class="v">${buildWhy(r)}</div></div>
+        <div class="rec-line"><div class="k">Neden uygun</div><div class="v">${r.whyText || buildWhy(r)}</div></div>
         <div class="rec-line"><div class="k">Riskler</div><div class="v">${h.risk}</div></div>
         <div class="rec-line"><div class="k">Kimler için</div><div class="v">${h.forWhom}</div></div>
         <div class="rec-detail-btn" data-detail="${h.id}" data-pct="${r.pct}">Skor kırılımını gör →</div>
@@ -2006,21 +1954,73 @@
     });
   }
 
-  function submit(text){
+  // AI yanıt kaynağı göstergesi
+  function setSource(src){
+    const el = document.getElementById('aiSource'); if(!el) return;
+    el.innerHTML = src==='claude' ? 'motor: <b>Claude</b>' : 'motor: <b>yerel</b>';
+  }
+
+  // Netlify Function üzerinden gerçek Claude'a sor (anahtar varsa). Yoksa null döner.
+  async function callBackend(q){
+    try {
+      const r = await fetch('/.netlify/functions/match', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ query:q, hotels: HOTELS.map(h=>({
+          id:h.id, name:h.name, city:h.city, price:h.price,
+          halal:!!h.halal, family:h.family>=.8, sea:!!h.sea, thermal:!!h.thermal,
+          nature:h.nature>=.7, quiet:h.quiet>=.8, urban:h.urban>=.6
+        })) })
+      });
+      if(!r.ok) return null;
+      const data = await r.json();
+      if(!data || !Array.isArray(data.picks) || !data.picks.length) return null;
+      const ranked = data.picks.map(p=>{
+        const h = HOTELS.find(x=>x.id===p.id); if(!h) return null;
+        const res = scoreHotel(h, parseIntent(q));
+        if(typeof p.score==='number') res.pct = Math.max(60, Math.min(99, Math.round(p.score)));
+        if(p.why) res.whyText = p.why;
+        return res;
+      }).filter(Boolean);
+      if(!ranked.length) return null;
+      return { ranked, understanding: data.understanding };
+    } catch(e){ return null; }
+  }
+
+  async function submit(text){
     const q = (text || input.value).trim();
     if (!q) return;
     input.value='';
     bubble('user', q.replace(/</g,'&lt;'));
-    // düşünüyor göstergesi
-    const think = bubble('ai', '<div class="thinking"><span></span><span></span><span></span></div>');
-    const intent = parseIntent(q);
-    const ranked = rankHotels(intent);
-    setTimeout(()=>{
-      think.remove();
-      renderResults(intent, ranked);
+
+    // aşamalı "düşünüyor" adımları — gerçek AI hissi
+    const think = bubble('ai',
+      `<div class="think-steps">
+        <div class="ts"><span class="tdot"></span> Niyet çözülüyor…</div>
+        <div class="ts"><span class="tdot"></span> 2.400 tesis skorlanıyor…</div>
+        <div class="ts"><span class="tdot"></span> Yorumlar taranıyor…</div>
+        <div class="ts"><span class="tdot"></span> En iyi 3 seçiliyor…</div>
+      </div>`);
+    const steps = [...think.querySelectorAll('.ts')];
+    let si = 0; steps[0].classList.add('active');
+    const stepTimer = setInterval(()=>{
+      steps[si].classList.remove('active'); steps[si].classList.add('done');
+      si++;
+      if(si < steps.length) steps[si].classList.add('active'); else clearInterval(stepTimer);
       stream.scrollTop = stream.scrollHeight;
-      think.scrollIntoView({behavior:'smooth', block:'nearest'});
-    }, 650);
+    }, 360);
+
+    const intent = parseIntent(q);
+    const api = await callBackend(q);            // gerçek AI (anahtar varsa) yoksa null
+    const ranked = (api && api.ranked) ? api.ranked : rankHotels(intent);
+    const source = (api && api.ranked) ? 'claude' : 'yerel';
+
+    setTimeout(()=>{
+      clearInterval(stepTimer);
+      think.remove();
+      setSource(source);
+      renderResults(intent, ranked, { understanding: api && api.understanding });
+      stream.scrollTop = stream.scrollHeight;
+    }, 1500);
   }
 
   // ── Modal: otel detayı + skor kırılımı ──
@@ -2068,7 +2068,166 @@
   }
   function closeModal(){ modal.classList.remove('open'); document.body.classList.remove('modal-open'); }
   modal.addEventListener('click', e=>{ if(e.target===modal) closeModal(); });
-  document.addEventListener('keydown', e=>{ if(e.key==='Escape') closeModal(); });
+  document.addEventListener('keydown', e=>{ if(e.key==='Escape'){ closeModal(); document.body.classList.remove('ai-full'); } });
+
+  // ── Katalog: 12 oteli veriden render et ──
+  function hotelTheme(h){
+    if(h.thermal) return 'thermal';
+    if(h.sea) return 'sea';
+    if(/göl|sapanca|abant/i.test(h.city + ' ' + h.name)) return 'lake';
+    if(h.mood.kultur >= .9) return 'culture';
+    if(h.urban >= .6) return 'urban';
+    return 'nature';
+  }
+  function hotelTags(h){
+    const t = [];
+    if(h.halal) t.push('<span class="dest-tag halal">Helal</span>');
+    if(h.family >= .8) t.push('<span class="dest-tag family">Aile</span>');
+    if(h.thermal) t.push('<span class="dest-tag">Termal</span>');
+    if(h.sea) t.push('<span class="dest-tag">Deniz</span>');
+    if(h.mood.kultur >= .85) t.push('<span class="dest-tag">Kültür</span>');
+    if(h.nature >= .9) t.push('<span class="dest-tag">Doğa</span>');
+    if(h.quiet >= .9) t.push('<span class="dest-tag">Sessiz</span>');
+    return t.slice(0,3).join('');
+  }
+  function renderCatalogue(){
+    const list = document.getElementById('catList'); if(!list) return;
+    const neutral = parseIntent('aile dostu, sessiz, helal');
+    list.innerHTML = HOTELS.map((h,i)=>{
+      const pct = scoreHotel(h, neutral).pct;
+      return `<div class="cat-row" data-id="${h.id}">
+        <div class="cat-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="cat-thumb img-plate ${hotelTheme(h)}"><div class="mountains"></div></div>
+        <div class="cat-info">
+          <div class="cat-name">${h.name}</div>
+          <div class="cat-tags">${hotelTags(h)}</div>
+        </div>
+        <div class="cat-meta"><strong>${h.city}</strong>${h.type}</div>
+        <div class="cat-meta"><strong>₺${h.price.toLocaleString('tr-TR')} / gece</strong>kahvaltı dahil</div>
+        <div class="cat-score"><div class="cat-score-num">${pct}</div></div>
+        <div class="cat-arrow">→</div>
+      </div>`;
+    }).join('');
+    list.querySelectorAll('.cat-row').forEach(row=> row.addEventListener('click', ()=> openModal(row.dataset.id, null, null)));
+  }
+  renderCatalogue();
+
+  // ── DNA hızlı testi (5 soru → profil güncellenir) ──
+  const DNA_Q = [
+    { q:'Tatilin ilk sabahı seni en çok ne mutlu eder?', a:[
+      {t:'Tarihî bir sokakta kaybolmak', m:'kultur'},
+      {t:'Hiç plan yapmadan dinlenmek', m:'huzur'},
+      {t:'Yerel lezzetleri keşfetmek', m:'gastronom'},
+      {t:'Bir patikada yürüyüşe çıkmak', m:'macera'} ]},
+    { q:'İdeal konaklaman hangisi?', a:[
+      {t:'Doğa içinde sessiz bir bungalov', m:'huzur'},
+      {t:'Tarihî taş bir konak', m:'kultur'},
+      {t:'Cami ve mescide yürüme mesafesinde', m:'manevi'},
+      {t:'Yöresel mutfağıyla ünlü bir tesis', m:'gastronom'} ]},
+    { q:'Bir günün en kıymetli anı?', a:[
+      {t:'Gün doğumunda sessizlik', m:'huzur'},
+      {t:'Bir müze ya da ören yeri', m:'kultur'},
+      {t:'Uzun, bol çeşitli bir kahvaltı', m:'gastronom'},
+      {t:'Manevi bir mekânda huzur', m:'manevi'} ]},
+    { q:'Rota seçerken önceliğin?', a:[
+      {t:'Macera ve hareket', m:'macera'},
+      {t:'Kültürel derinlik', m:'kultur'},
+      {t:'Dinginlik ve mahremiyet', m:'huzur'},
+      {t:'Manevi anlam', m:'manevi'} ]},
+    { q:'Seni en iyi anlatan cümle?', a:[
+      {t:'Lezzetin peşinden giderim', m:'gastronom'},
+      {t:'Sessizlik benim lüksüm', m:'huzur'},
+      {t:'Her taşın bir hikâyesi var', m:'kultur'},
+      {t:'Yeni ve zorlayıcı olanı severim', m:'macera'} ]},
+  ];
+  const TRAIT_LABEL = { kultur:'Kültür avcısı', huzur:'Huzur arayan', macera:'Maceracı', gastronom:'Gastronom', manevi:'Manevi' };
+  const dnaSideEl = document.getElementById('dnaSide');
+  const dnaStartBtn = document.getElementById('dnaStart');
+
+  function startDnaQuiz(){
+    const scores = { kultur:0, huzur:0, macera:0, gastronom:0, manevi:0 };
+    let qi = 0;
+    dnaSideEl.innerHTML = `<div class="dna-quiz">
+      <div class="dna-quiz-prog" id="dnaProg"></div>
+      <div class="dna-quiz-q" id="dnaQ"></div>
+      <div class="dna-quiz-opts" id="dnaOpts"></div>
+    </div>`;
+    const progEl = document.getElementById('dnaProg');
+    const qEl = document.getElementById('dnaQ');
+    const optsEl = document.getElementById('dnaOpts');
+    function show(){
+      const item = DNA_Q[qi];
+      progEl.textContent = `Soru ${qi+1} / ${DNA_Q.length}`;
+      qEl.textContent = item.q;
+      optsEl.innerHTML = item.a.map((o,k)=>`<button class="dna-opt" data-m="${o.m}">${o.t}</button>`).join('');
+      optsEl.querySelectorAll('.dna-opt').forEach(b=> b.addEventListener('click', ()=>{
+        scores[b.dataset.m] += 1; qi++;
+        if(qi < DNA_Q.length) show(); else finish(scores);
+      }));
+    }
+    show();
+  }
+
+  function applyDnaProfile(scores){
+    const total = Object.values(scores).reduce((a,b)=>a+b,0) || 1;
+    const pcts = {};
+    Object.keys(scores).forEach(k=> pcts[k] = Math.round((scores[k]/total)*100));
+    document.querySelectorAll('#dnaProfile .dna-row').forEach(row=>{
+      const tr = row.getAttribute('data-trait'); if(pcts[tr]==null) return;
+      const fill = row.querySelector('.dna-fill'); const num = row.querySelector('.dna-row-num');
+      const w = Math.min(96, 18 + pcts[tr]*0.8 + (scores[tr]>0?12:0));
+      fill.style.width = w + '%'; if(num) num.textContent = '%'+pcts[tr];
+    });
+    const top = Object.entries(scores).sort((a,b)=>b[1]-a[1]);
+    const name = document.getElementById('dnaName');
+    const idEl = document.getElementById('dnaId');
+    const sum = document.getElementById('dnaSummary');
+    if(name) name.textContent = `${TRAIT_LABEL[top[0][0]]}, ${TRAIT_LABEL[top[1][0]].toLowerCase()}.`;
+    if(idEl) idEl.textContent = `Profil ID — BTG·${Math.floor(1000+total*137%9000)} · Az önce güncellendi`;
+    const recoMap = {
+      kultur:'Tarihî dokulu butik konaklamalar — Kapadokya, Mardin, Safranbolu.',
+      huzur:'Sessiz, doğa içinde tesisler — Bolu, Abant, Pamukkale termal.',
+      macera:'Doğa ve hareket — Ayder yaylası, göl ve orman rotaları.',
+      gastronom:'Mutfağı güçlü duraklar — Mardin, Gaziantep çevresi, yöresel konaklar.',
+      manevi:'Cami yakını, namaz alanlı tesisler; sessiz manevi rotalar.'
+    };
+    if(sum) sum.innerHTML = `<strong>Önerimiz:</strong> ${recoMap[top[0][0]]} Sessiz dönemlerde seyahat et: Şubat – Mart, Kasım sonu.`;
+    return top[0][0];
+  }
+
+  function finish(scores){
+    const topTrait = applyDnaProfile(scores);
+    const queries = {
+      kultur:'Tarihî ve kültürel bir rota, butik konak, 3 gece, gastronomi de olsun, 18 bin',
+      huzur:'Sessiz ve huzurlu, doğa içinde, 4 gece, aile dostu ve alkolsüz, bütçe 15 bin',
+      macera:'Doğa ve hafif macera, yayla veya göl, 4 gece, aile dostu, 16 bin',
+      gastronom:'Gastronomisi güçlü, tarihî bir durak, 3 gece, helal, 18 bin',
+      manevi:'Manevi bir mola, cami yakını, namaz alanı olsun, sessiz, 4 gün, 12 bin'
+    };
+    dnaSideEl.innerHTML = `<h3>Profilin <em>hazır.</em></h3>
+      <p>Soldaki DNA grafiğin cevaplarına göre güncellendi. Şimdi bu profile göre üç öneri çıkarayım mı?</p>
+      <button class="btn-arrow" id="dnaReco" style="background:var(--btg-gold); color:var(--btg-midnight);">
+        <span>Bu profile göre öner</span>
+        <svg width="18" height="10" viewBox="0 0 18 10" fill="none"><path d="M1 5h16M12 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="btn-text" id="dnaRetry" style="display:block; margin-top:18px;">Testi tekrar çöz</button>`;
+    document.getElementById('dnaReco').addEventListener('click', ()=>{
+      document.getElementById('ai').scrollIntoView({behavior:'smooth'});
+      setTimeout(()=> submit(queries[topTrait] || queries.huzur), 500);
+    });
+    document.getElementById('dnaRetry').addEventListener('click', startDnaQuiz);
+  }
+  if(dnaStartBtn) dnaStartBtn.addEventListener('click', startDnaQuiz);
+
+  // ── Tam ekran sohbet ──
+  const aiExpand = document.getElementById('aiExpand');
+  if(aiExpand) aiExpand.addEventListener('click', ()=>{
+    document.body.classList.toggle('ai-full');
+    if(document.body.classList.contains('ai-full')) input.focus();
+    stream.scrollTop = stream.scrollHeight;
+  });
+  const aiFullDim = document.getElementById('aiFullDim');
+  if(aiFullDim) aiFullDim.addEventListener('click', ()=> document.body.classList.remove('ai-full'));
 
   // ── Olay bağlama ──
   document.getElementById('chatSend').addEventListener('click', ()=> submit());
@@ -2091,12 +2250,7 @@
     m.addEventListener('click', ()=>{ document.getElementById('ai').scrollIntoView({behavior:'smooth'}); setTimeout(()=>submit(MODE_Q[keys[idx]]||MODE_Q.huzur), 450); });
   });
 
-  // koleksiyon satırları → otel detay modalı (ilk 6 kayıt sırayla)
-  document.querySelectorAll('.catalogue .cat-row').forEach((row,idx)=>{
-    const h = HOTELS[idx];
-    if (!h) return;
-    row.addEventListener('click', ()=> openModal(h.id, null, null));
-  });
+  // (koleksiyon satırları renderCatalogue() içinde bağlanır)
 </script>
 
 </body>

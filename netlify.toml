@@ -1,0 +1,11 @@
+# BirTurlaGel — Netlify yapılandırması
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Gerçek Claude yanıtı için Netlify panelinde ortam değişkeni tanımla:
+#   ANTHROPIC_API_KEY = sk-ant-...
+# Tanımlı değilse site, tarayıcı-içi yerel eşleştirme motoruna otomatik düşer.

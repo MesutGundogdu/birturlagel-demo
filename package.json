@@ -1,0 +1,14 @@
+{
+  "name": "birturlagel-demo",
+  "version": "0.2.0",
+  "private": true,
+  "description": "BirTurlaGel — AI seyahat eşleştirme demosu (statik site + Netlify Function ile gerçek Claude)",
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "deploy": "netlify deploy --prod"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  }
+}
